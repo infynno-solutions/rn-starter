@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "452141617982",
+    "firebase_url": "https://infynno-tasks-app.firebaseio.com",
+    "project_id": "infynno-tasks-app",
+    "storage_bucket": "infynno-tasks-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452141617982:android:7a4f13a9ee7322b277526f",
+        "android_client_info": {
+          "package_name": "com.infynno.tasks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452141617982-h4o240pvcqr7em55q8ln7s1e3cn0on49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4EdetbxaICgz404xuIGIYWa2xy0fRFV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452141617982-h4o240pvcqr7em55q8ln7s1e3cn0on49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

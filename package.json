@@ -1,0 +1,93 @@
+{
+  "name": "tasks",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "debug:build": "detox build -c android.emu.debug",
+    "debug:test": "detox test -c android.emu.debug",
+    "release:build": "detox build -c android.emu.release",
+    "release:test": "detox test -c android.emu.release",
+    "lint": "eslint .",
+    "codepush": "appcenter codepush release-react -a Infynno-Solutions/Infynno-Solutions -d Production",
+    "sourcemap": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android-release.bundle --sourcemap-output android-release.bundle.map",
+    "postsourcemap": "curl --http1.1 https://upload.bugsnag.com/react-native-source-map -F apiKey=81610f634e956f713399d1f3efc6cc76 -F codeBundleId=2.0.0 -F dev=false -F platform=android -F sourceMap=@android-release.bundle.map -F bundle=@android-release.bundle -F projectRoot=`pwd`"
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.7.0",
+    "@react-native-community/datetimepicker": "^2.1.0",
+    "@react-native-picker/picker": "^1.9.8",
+    "@react-navigation/core": "^5.0.0-alpha.26",
+    "@twotalltotems/react-native-otp-input": "^1.1.2",
+    "appcenter": "^2.6.1",
+    "appcenter-analytics": "^2.6.1",
+    "appcenter-crashes": "^2.6.1",
+    "axios": "^0.19.0",
+    "bugsnag-react-native": "^2.23.3",
+    "d3-shape": "^1.3.7",
+    "date-fns": "^2.8.1",
+    "formik": "^2.0.8",
+    "moment": "^2.24.0",
+    "react": "16.9.0",
+    "react-native": "0.61.5",
+    "react-native-calendars": "^1.214.0",
+    "react-native-code-push": "^6.0.0",
+    "react-native-gesture-handler": "^1.5.2",
+    "react-native-image-picker": "^1.1.0",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-push-notification": "^3.1.9",
+    "react-native-reanimated": "^1.4.0",
+    "react-native-render-html": "4.1.2",
+    "react-native-screens": "^2.0.0-alpha.17",
+    "react-native-simple-radio-button": "^2.7.4",
+    "react-native-snackbar": "^2.0.4",
+    "react-native-splash-screen": "^3.2.0",
+    "react-native-svg": "^11.0.1",
+    "react-native-svg-charts": "^5.3.0",
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^1.10.3",
+    "react-navigation-tabs": "^2.6.2",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.4",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.27.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/runtime": "^7.7.6",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "detox": "^15.2.2",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.57.0",
+    "prettier": "^1.19.1",
+    "react-test-renderer": "16.9.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "detox": {
+    "configurations": {
+      "android.emu.debug": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
+        "type": "android.emulator",
+        "name": "Pixel_3_XL_API_29"
+      },
+      "android.emu.release": {
+        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+        "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
+        "type": "android.emulator",
+        "name": "Pixel_3_XL_API_29"
+      }
+    },
+    "test-runner": "jest"
+  }
+}
