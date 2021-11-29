@@ -7,7 +7,6 @@ import {Provider} from 'react-redux'
 import {store, persistor} from './app/store'
 import {PersistGate} from 'redux-persist/es/integration/react'
 import {Client, Configuration} from 'bugsnag-react-native'
-import codePush from 'react-native-code-push'
 import PushNotification from 'react-native-push-notification'
 import SplashScreen from 'react-native-splash-screen'
 
@@ -16,7 +15,6 @@ config.codeBundleId = '2.0.0'
 // eslint-disable-next-line no-unused-vars
 const bugsnag = new Client(config)
 //TODO: Button to check for app updates
-// let codePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 class App extends Component {
   constructor(props) {
     super(props)
@@ -65,5 +63,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default codePush(App)
-// export default codePush(codePushOptions)(App);
+export default App

@@ -6,14 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "debug:build": "detox build -c android.emu.debug",
-    "debug:test": "detox test -c android.emu.debug",
-    "release:build": "detox build -c android.emu.release",
-    "release:test": "detox test -c android.emu.release",
-    "lint": "eslint .",
-    "codepush": "appcenter codepush release-react -a Infynno-Solutions/Infynno-Solutions -d Production",
-    "sourcemap": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android-release.bundle --sourcemap-output android-release.bundle.map",
-    "postsourcemap": "curl --http1.1 https://upload.bugsnag.com/react-native-source-map -F apiKey=81610f634e956f713399d1f3efc6cc76 -F codeBundleId=2.0.0 -F dev=false -F platform=android -F sourceMap=@android-release.bundle.map -F bundle=@android-release.bundle -F projectRoot=`pwd`"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.7.0",
@@ -21,9 +14,6 @@
     "@react-native-picker/picker": "^1.9.8",
     "@react-navigation/core": "^5.0.0-alpha.26",
     "@twotalltotems/react-native-otp-input": "^1.1.2",
-    "appcenter": "^2.6.1",
-    "appcenter-analytics": "^2.6.1",
-    "appcenter-crashes": "^2.6.1",
     "axios": "^0.19.0",
     "bugsnag-react-native": "^2.23.3",
     "d3-shape": "^1.3.7",
@@ -33,7 +23,6 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-calendars": "^1.214.0",
-    "react-native-code-push": "^6.0.0",
     "react-native-gesture-handler": "^1.5.2",
     "react-native-image-picker": "^1.1.0",
     "react-native-linear-gradient": "^2.5.6",
@@ -61,7 +50,6 @@
     "@babel/runtime": "^7.7.6",
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
-    "detox": "^15.2.2",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -72,22 +60,5 @@
   },
   "jest": {
     "preset": "react-native"
-  },
-  "detox": {
-    "configurations": {
-      "android.emu.debug": {
-        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
-        "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
-        "type": "android.emulator",
-        "name": "Pixel_3_XL_API_29"
-      },
-      "android.emu.release": {
-        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
-        "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
-        "type": "android.emulator",
-        "name": "Pixel_3_XL_API_29"
-      }
-    },
-    "test-runner": "jest"
   }
 }

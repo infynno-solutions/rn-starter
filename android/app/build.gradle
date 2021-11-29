@@ -86,7 +86,6 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -137,8 +136,8 @@ android {
         applicationId "com.infynno.tasks"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "2.2.2"
+        versionCode 14
+        versionName "2.2.3"
         multiDexEnabled true
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -169,18 +168,15 @@ android {
     }
     buildTypes {
         debug {
-            resValue "string", "CodePushDeploymentKey", '"MXU8MEntsQJ4906JOsxRC6ANIYRocyhcn1rsZ"'
             signingConfig signingConfigs.debug
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
             // signingConfig signingConfigs.debug
-            resValue "string", "CodePushDeploymentKey", '"MXU8MEntsQJ4906JOsxRC6ANIYRocyhcn1rsZ"'
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
         }
     }
     // applicationVariants are e.g. debug, release
