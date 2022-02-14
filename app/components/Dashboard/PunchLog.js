@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Config} from '../../common'
 import {useSelector, useDispatch} from 'react-redux'
 import {fetchPunchLogs, createPunchLog} from './DashboardActions'
+import moment from 'moment'
 
 const styles = StyleSheet.create({
   punchLogWrapper: {
@@ -52,6 +53,33 @@ const styles = StyleSheet.create({
   },
 })
 
+const calculateHoursSpent = punchlogs => {
+  if (!punchlogs) {
+    return '00:00'
+  }
+
+  let totalMinutes = 0
+
+  punchlogs.map(log => {
+    if (log.log_out) {
+      const end = moment(`${log.log_date} ${log.log_out}`)
+      const start = moment(`${log.log_date} ${log.log_in}`)
+      const duration = moment.duration(end.diff(start))
+      totalMinutes += duration.asMinutes()
+    } else {
+      const end = moment(new Date())
+      const start = moment(`${log.log_date} ${log.log_in}`)
+      const duration = moment.duration(end.diff(start))
+      totalMinutes += duration.asMinutes()
+    }
+  })
+
+  const hours = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+
+  return `${hours.toFixed(0)}:${minutes.toFixed(0)}`
+}
+
 const PunchLog = ({navigation}) => {
   const {punchlogs} = useSelector(state => ({
     punchlogs: state.DashboardReducers.punchlogs,
@@ -79,7 +107,10 @@ const PunchLog = ({navigation}) => {
   return (
     <View style={styles.punchLogWrapper} testID={'punchCard'}>
       <View style={styles.info}>
-        <Text style={styles.title}>Today's Punch Logs</Text>
+        <Text style={styles.title}>
+          Today's Punch Logs ({calculateHoursSpent(punchlogs?.data?.punch_logs)}
+          )
+        </Text>
         {punchlogs.data && punchlogs.data.punch_logs.length > 0 ? (
           <>
             {punchlogs.data.punch_logs.map((log, index) => (
