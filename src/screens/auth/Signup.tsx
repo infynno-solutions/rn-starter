@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
-import {SignupScreenProps} from '../../types/CommonTypes';
+import {SignupScreenProps} from '../../types/commonTypes';
 
 const SignupScreen: FC<SignupScreenProps> = () => {
   return (

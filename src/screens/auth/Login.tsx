@@ -9,12 +9,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import AppStyle, {Responsive} from '../../config/AppStyle';
-import colors from '../../config/Color';
-import String from '../../config/String';
-import {LoginValuesType} from '../../types/AuthTypes';
-import {LoginScreenProps} from '../../types/CommonTypes';
-import {loginSchema} from '../../validation/Validation';
+import AppStyle, {Responsive} from '../../styles/appStyle';
+import colors from '../../constants/color';
+import String from '../../constants/string';
+import {LoginValuesType} from '../../types/authTypes';
+import {LoginScreenProps} from '../../types/commonTypes';
+import {loginSchema} from '../../validation/validation';
 
 const LoginScreen: FC<LoginScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);

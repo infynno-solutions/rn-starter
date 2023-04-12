@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
-import {ForgotPasswordScreenProps} from '../../types/CommonTypes';
+import {ForgotPasswordScreenProps} from '../../types/commonTypes';
 
 const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = () => {
   return (

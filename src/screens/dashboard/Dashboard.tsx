@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
-import {DashboardScreenProps} from '../../types/CommonTypes';
+import {DashboardScreenProps} from '../../types/commonTypes';
 
 const DashboardScreen: FC<DashboardScreenProps> = () => {
   return (
