@@ -2,7 +2,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamsListType} from '../types/commonTypes';
-// Screens
 import DashboardScreen from '../screens/dashboard/dashboard';
 
 const Stack = createNativeStackNavigator<RootStackParamsListType>();

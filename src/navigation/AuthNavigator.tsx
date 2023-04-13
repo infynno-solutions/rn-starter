@@ -1,10 +1,10 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamsListType} from '../types/commonTypes';
-import LoginScreen from '../screens/auth/login';
-import SignupScreen from '../screens/auth/signup';
-import ForgotPasswordScreen from '../screens/auth/forgotPassword';
-import ChangePasswordScreen from '../screens/auth/changePassword';
+import LoginScreen from '../screens/auth/login/login';
+import SignupScreen from '../screens/auth/signup/signup';
+import ForgotPasswordScreen from '../screens/auth/forgotPassword/forgotPassword';
+import ChangePasswordScreen from '../screens/auth/changePassword/changePassword';
 
 const Stack = createNativeStackNavigator<RootStackParamsListType>();
 

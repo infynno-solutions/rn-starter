@@ -1,43 +1,39 @@
 import React, {useEffect, useState} from 'react';
-import { Provider } from "react-redux";
-import { persistStore } from 'redux-persist';
+import {View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import DashboardNavigator from './DashboardNavigator';
 import AuthNavigator from './AuthNavigator';
-import store from '../store/store';
-import { PersistGate } from 'redux-persist/integration/react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-
-
-let persistor = persistStore(store);
+import {ApplicationState} from '../types/commonTypes';
+import SplashScreen from '../screens/splashScreen/splashScreen';
+import appStyle from '../styles/appStyle';
 
 const Navigation = () => {
   const [isPreloading, setIsPreloading] = useState<boolean>(true);
-
-  const isUserLogin = false;
+  const isUserLogin = useSelector(
+    (state: ApplicationState) => state.auth.isSuccess,
+  );
 
   useEffect(() => {
-    async function fetchData() {
-      setIsPreloading(false);
-    }
-    fetchData();
+    setTimeout(() => setIsPreloading(false), 3000);
   }, []);
 
-  if (isPreloading) {
-    return null;
-  } else {
-    return (
-      <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-      <SafeAreaProvider>
-      <NavigationContainer>
-        {isUserLogin ? <DashboardNavigator /> : <AuthNavigator />}
-      </NavigationContainer>
-      </SafeAreaProvider>
-      </PersistGate>
-      </Provider>
-    );
-  }
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={appStyle.container}>
+        <NavigationContainer>
+          {isPreloading ? (
+            <SplashScreen />
+          ) : isUserLogin ? (
+            <DashboardNavigator />
+          ) : (
+            <AuthNavigator />
+          )}
+        </NavigationContainer>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
 };
 
 export default Navigation;

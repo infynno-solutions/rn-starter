@@ -10,24 +10,21 @@ export const Responsive = {
   getWidth: function (w: number) {
     return PixelRatio.roundToNearestPixel(width * (w / 375));
   },
-  
 };
 
-const widthPercentageToDP = (widthPercent:string) => {
+const widthPercentageToDP = (widthPercent: string) => {
   const elemWidth =
-    typeof widthPercent === "number" ? widthPercent : parseFloat(widthPercent);
+    typeof widthPercent === 'number' ? widthPercent : parseFloat(widthPercent);
   return PixelRatio.roundToNearestPixel((width * elemWidth) / 100);
 };
 
-const heightPercentageToDP = (heightPercent:string) => {
+const heightPercentageToDP = (heightPercent: string) => {
   const elemHeight =
-    typeof heightPercent === "number"
+    typeof heightPercent === 'number'
       ? heightPercent
       : parseFloat(heightPercent);
   return PixelRatio.roundToNearestPixel((height * elemHeight) / 100);
 };
-
-
 
 export default StyleSheet.create({
   SafeAreaViewStyle: {
@@ -38,6 +35,17 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
+    backgroundColor: colors.theme,
+  },
+  container2: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: colors.theme,
+  },
+  container3: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.theme,
   },
   ScrollView: {
@@ -87,8 +95,4 @@ export default StyleSheet.create({
   },
 });
 
-
-export {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-};
+export {widthPercentageToDP as wp, heightPercentageToDP as hp};

@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { Platform } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from 'axios';
+import {Platform} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   getInstanceId,
   getManufacturer,
@@ -11,20 +11,18 @@ import {
   getUniqueId,
   getModel,
   getVersion,
-} from "react-native-device-info";
-import { axiosInterceptors } from "../../api";
-
-
+} from 'react-native-device-info';
+import {axiosInterceptors} from '../../api';
 
 const initialState = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
   isFetching: false,
   isSuccess: false,
   isError: false,
-  errorMessage: "",
+  errorMessage: '',
   userData: {},
-  userToken: "",
+  userToken: '',
   redirectLogin: {
     isLoading: false,
     data: null,
@@ -32,8 +30,11 @@ const initialState = {
   },
 };
 export const registerUser = createAsyncThunk(
-  "auth/register",
-  async ({ firstName, email, confirmEmail, website }:RegisterUserParams, thunkAPI) => {
+  'auth/register',
+  async (
+    {firstName, email, confirmEmail, website}: RegisterUserParams,
+    thunkAPI,
+  ) => {
     try {
       const response = await axiosInterceptors.post(`register`, {
         first_name: firstName,
@@ -43,15 +44,15 @@ export const registerUser = createAsyncThunk(
       });
 
       return response;
-    } catch (e:any) {
+    } catch (e: any) {
       return thunkAPI.rejectWithValue(e.response.data);
     }
-  }
+  },
 );
 
 export const loginUser = createAsyncThunk(
-  "auth/login",
-  async ({ email, password }:LoginUserParams, thunkAPI) => {
+  'auth/login',
+  async ({email, password}: LoginUserParams, thunkAPI) => {
     try {
       const uuid = await getUniqueId();
       const manufacturer = await getManufacturer();
@@ -60,8 +61,8 @@ export const loginUser = createAsyncThunk(
       const model = await getModel();
       const os = Platform.OS;
       const appVersion = await getVersion();
-      const device = `${brand || ""} ${model || ""}, ${os || ""} ${
-        version || ""
+      const device = `${brand || ''} ${model || ''}, ${os || ''} ${
+        version || ''
       }`;
       const response = await axios.post(`/login`, {
         email,
@@ -73,17 +74,17 @@ export const loginUser = createAsyncThunk(
       });
 
       return response?.data;
-    } catch (e:any) {
+    } catch (e: any) {
       return thunkAPI.rejectWithValue(e.response);
     }
-  }
+  },
 );
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: initialState,
   reducers: {
-    clearRedirectLoginData: (state) => {
+    clearRedirectLoginData: state => {
       state.redirectLogin = {
         isLoading: false,
         data: null,
@@ -91,21 +92,21 @@ export const authSlice = createSlice({
       };
     },
 
-    clearState: (state) => {
+    clearState: state => {
       state.isError = false;
       state.isSuccess = false;
       state.isFetching = false;
-      AsyncStorage.removeItem("bearer_token");
+      AsyncStorage.removeItem('bearer_token');
       AsyncStorage.clear();
       return state;
     },
-    clearLoginStates: (state) => {
+    clearLoginStates: state => {
       state.isError = false;
       state.isSuccess = false;
       state.isFetching = false;
       return state;
     },
-    setLoginIsSuccess: (state) => {
+    setLoginIsSuccess: state => {
       state.isSuccess = true;
       state.isFetching = false;
       return state;
@@ -114,22 +115,22 @@ export const authSlice = createSlice({
       return initialState;
     },
   },
-  extraReducers: (builder)=>{
+  extraReducers: builder => {
     builder.addCase(loginUser.fulfilled, (state, {payload}) => {
-        state.userData = payload.data.user;
-        state.userToken = payload?.data?.user?.bearer_token?.toString() || "";
-        AsyncStorage.setItem(
-          "bearer_token",
-          payload?.data?.user?.bearer_token?.toString() || ""
-        );
-        AsyncStorage.setItem("user", JSON.stringify(payload?.data?.user));
-        state.email = payload.email;
-        state.password = payload.password;
-        state.isFetching = false;
-        state.isSuccess = true;
-        return state;
-      }),
-      builder.addCase(loginUser.rejected, (state, {payload}:any) => {
+      state.userData = payload.data.user;
+      state.userToken = payload?.data?.user?.bearer_token?.toString() || '';
+      AsyncStorage.setItem(
+        'bearer_token',
+        payload?.data?.user?.bearer_token?.toString() || '',
+      );
+      AsyncStorage.setItem('user', JSON.stringify(payload?.data?.user));
+      state.email = payload.email;
+      state.password = payload.password;
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    }),
+      builder.addCase(loginUser.rejected, (state, {payload}: any) => {
         state.isFetching = false;
         state.isError = true;
         state.errorMessage = payload.message;
@@ -137,29 +138,29 @@ export const authSlice = createSlice({
       builder.addCase(loginUser.pending, (state, {payload}) => {
         state.isFetching = true;
       }),
-      builder.addCase(registerUser.fulfilled, (state, {payload}:any) => {
+      builder.addCase(registerUser.fulfilled, (state, {payload}: any) => {
         state.userData = payload.data.user;
-        state.userToken = payload?.data?.user?.bearer_token?.toString() || "";
+        state.userToken = payload?.data?.user?.bearer_token?.toString() || '';
         AsyncStorage.setItem(
-          "bearer_token",
-          payload?.data?.user?.bearer_token?.toString() || ""
+          'bearer_token',
+          payload?.data?.user?.bearer_token?.toString() || '',
         );
-        AsyncStorage.setItem("user", JSON.stringify(payload?.data?.user));
+        AsyncStorage.setItem('user', JSON.stringify(payload?.data?.user));
         state.email = payload.email;
         state.password = payload.password;
         state.isFetching = false;
         state.isSuccess = true;
         return state;
       }),
-      builder.addCase(registerUser.rejected, (state, {payload}:any) => {
+      builder.addCase(registerUser.rejected, (state, {payload}: any) => {
         state.isFetching = false;
         state.isError = true;
         state.errorMessage = payload.message;
       }),
       builder.addCase(registerUser.pending, (state, {payload}) => {
         state.isFetching = true;
-      })
-  }
+      });
+  },
 });
 export const {
   clearState,
