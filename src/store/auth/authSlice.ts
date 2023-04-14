@@ -55,7 +55,6 @@ export const loginUser = createAsyncThunk(
   async ({email, password}: LoginUserParams, thunkAPI) => {
     try {
       const uuid = await getUniqueId();
-      const manufacturer = await getManufacturer();
       const brand = await getBrand();
       const version = await getSystemVersion();
       const model = await getModel();

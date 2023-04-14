@@ -1,7 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import store from '../store/store';
 
-export type ApplicationState = ReturnType<typeof store.getState>
+export type ApplicationState = ReturnType<typeof store.getState>;
 
 export type RootStackParamsListType = {
   Login: undefined;
@@ -32,4 +32,3 @@ export type DashboardScreenProps = NativeStackScreenProps<
   RootStackParamsListType,
   'Dashboard'
 >;
-
