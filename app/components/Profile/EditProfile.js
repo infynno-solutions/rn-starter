@@ -165,6 +165,44 @@ class EditProfile extends Component {
       })
     }
 
+    const takePictureFunction = (setFieldValue) => {
+      setTimeout(() => {
+        check(
+          Platform.OS === 'ios'
+            ? PERMISSIONS.IOS.CAMERA
+            : PERMISSIONS.ANDROID.CAMERA
+        ).then((result) =>
+          getStatus(result, _pickImageFromCamera(setFieldValue), () => {
+            request(
+              Platform.OS === 'ios'
+                ? PERMISSIONS.IOS.CAMERA
+                : PERMISSIONS.ANDROID.CAMERA
+            ).then((res) => getStatus(res, _pickImageFromCamera(setFieldValue)))
+          })
+        )
+      }, 500)
+    }
+
+    const uploadPictureFunction = (setFieldValue) => {
+      setTimeout(() => {
+        check(
+          Platform.OS === 'ios'
+            ? PERMISSIONS.IOS.PHOTO_LIBRARY
+            : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
+        ).then((result) =>
+          getStatus(result, _pickImageFromGallery(setFieldValue), () => {
+            request(
+              Platform.OS === 'ios'
+                ? PERMISSIONS.IOS.PHOTO_LIBRARY
+                : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
+            ).then((res) =>
+              getStatus(res, _pickImageFromGallery(setFieldValue))
+            )
+          })
+        )
+      }, 500)
+    }
+
     return (
       <ScrollView
         refreshControl={
@@ -247,30 +285,7 @@ class EditProfile extends Component {
                         <TouchableOpacity
                           style={styles.avatarUpload}
                           onPress={() => {
-                            setTimeout(() => {
-                              check(
-                                Platform.OS === 'ios'
-                                  ? PERMISSIONS.IOS.CAMERA
-                                  : PERMISSIONS.ANDROID.CAMERA
-                              ).then((result) =>
-                                getStatus(
-                                  result,
-                                  _pickImageFromCamera(setFieldValue),
-                                  () => {
-                                    request(
-                                      Platform.OS === 'ios'
-                                        ? PERMISSIONS.IOS.CAMERA
-                                        : PERMISSIONS.ANDROID.CAMERA
-                                    ).then((res) =>
-                                      getStatus(
-                                        res,
-                                        _pickImageFromCamera(setFieldValue)
-                                      )
-                                    )
-                                  }
-                                )
-                              )
-                            }, 500)
+                            takePictureFunction(setFieldValue)
                           }}>
                           <Icon name="camera" size={20} color="#fff" />
                           <Text style={styles.imageUploadText}>
@@ -280,31 +295,7 @@ class EditProfile extends Component {
                         <TouchableOpacity
                           style={styles.avatarUpload}
                           onPress={() => {
-                            setTimeout(() => {
-                              check(
-                                Platform.OS === 'ios'
-                                  ? PERMISSIONS.IOS.PHOTO_LIBRARY
-                                  : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
-                              ).then((result) =>
-                                getStatus(
-                                  result,
-                                  _pickImageFromGallery(setFieldValue),
-                                  () => {
-                                    request(
-                                      Platform.OS === 'ios'
-                                        ? PERMISSIONS.IOS.PHOTO_LIBRARY
-                                        : PERMISSIONS.ANDROID
-                                            .READ_EXTERNAL_STORAGE
-                                    ).then((res) =>
-                                      getStatus(
-                                        res,
-                                        _pickImageFromGallery(setFieldValue)
-                                      )
-                                    )
-                                  }
-                                )
-                              )
-                            }, 500)
+                            uploadPictureFunction(setFieldValue)
                           }}>
                           <Icon name="image" size={20} color="#fff" />
                           <Text style={styles.imageUploadText}>Upload</Text>

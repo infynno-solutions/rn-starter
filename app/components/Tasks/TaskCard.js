@@ -205,14 +205,7 @@ class TaskCard extends Component {
                   this.setState({noteVisible: false})
                   await this.endTimer(values)
                 }}>
-                {({
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  values,
-                  errors,
-                  setFieldValue,
-                }) => (
+                {({handleChange, handleBlur, handleSubmit, values, errors}) => (
                   <>
                     <View style={styles.note}>
                       <TextInput

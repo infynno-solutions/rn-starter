@@ -30,7 +30,7 @@ const ProjectsStackScreen = () => {
 const LeavesStackScreen = () => {
   return (
     <LeavesStack.Navigator
-      screenOptions={({navigation}) => ({
+      screenOptions={() => ({
         headerShown: false,
       })}>
       <LeavesStack.Screen name="Leaves" component={LeavesScreen} />

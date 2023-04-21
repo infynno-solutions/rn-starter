@@ -32,7 +32,7 @@ class InterviewScreen extends Component {
     await this.props.fetchInterviews(navigation)
   }
 
-  renderInterviewView = ({item, index}) => {
+  renderInterviewView = ({item}) => {
     const {navigation} = this.props
     if (item === null) {
       return <View />

@@ -12,7 +12,6 @@ import AppRouter from './app/navigation/Router'
 
 const config = new Configuration('81610f634e956f713399d1f3efc6cc76')
 config.codeBundleId = '2.0.0'
-// const bugsnag = new Client(config)
 //TODO: Button to check for app updates
 class App extends Component {
   constructor(props) {

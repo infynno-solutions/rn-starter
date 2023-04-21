@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
-
 import React from 'react'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
@@ -23,7 +21,7 @@ function DashboardNavigator() {
   return (
     <Stack.Navigator
       initialRouteName="AppDrawerStack"
-      screenOptions={({navigation}) => ({
+      screenOptions={() => ({
         headerStyle: {
           backgroundColor: 'white',
           borderBottomWidth: 1,
@@ -46,7 +44,7 @@ function DashboardNavigator() {
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
-        options={(props) => {
+        options={() => {
           return {
             headerShown: true,
           }
@@ -55,7 +53,7 @@ function DashboardNavigator() {
       <Stack.Screen
         name="Policies"
         component={Policies}
-        options={(props) => {
+        options={() => {
           return {
             headerShown: false,
           }
@@ -64,7 +62,7 @@ function DashboardNavigator() {
       <Stack.Screen
         name="RequestLeave"
         component={RequestLeave}
-        options={(props) => {
+        options={() => {
           return {
             headerShown: false,
           }
@@ -73,7 +71,7 @@ function DashboardNavigator() {
       <Stack.Screen
         name="EditLeave"
         component={EditLeave}
-        options={(props) => {
+        options={() => {
           return {
             headerShown: false,
           }
@@ -97,7 +95,7 @@ function DashboardNavigator() {
       <Stack.Screen
         name="InterviewFeedback"
         component={InterviewFeedback}
-        options={(props) => {
+        options={() => {
           return {
             headerShown: false,
           }
@@ -128,11 +126,6 @@ function DashboardNavigator() {
           }
         }}
       />
-      {/* <Stack.Screen
-        name="BottomNavigator"
-        component={BottomNavigator}
-        options={{headerShown: false, headerTitleAlign: 'center'}}
-      /> */}
       <Stack.Screen
         name="AppDrawerStack"
         component={AppDrawerStack}

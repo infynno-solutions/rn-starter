@@ -56,11 +56,11 @@ class LoginScreen extends Component {
         </View>
         <Formik
           initialValues={{
-            email: 'navin.infynno@gmail.com',
-            password: 'Navin@123',
+            email: '',
+            password: '',
           }}
           validationSchema={this.loginSchema}
-          onSubmit={async (values, actions) => {
+          onSubmit={async (values) => {
             const user = {
               email: values.email,
               password: values.password,

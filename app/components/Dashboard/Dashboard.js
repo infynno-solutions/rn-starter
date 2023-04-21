@@ -59,7 +59,6 @@ const Dashboard = ({navigation}) => {
             }}
           />
         }>
-        {/* <PunchLog /> */}
         <IconBox
           backgroundColor="rgba(115,108,199,.4)"
           color="#736cc7"

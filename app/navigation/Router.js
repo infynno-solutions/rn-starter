@@ -8,8 +8,6 @@ import AuthNavigator from './AuthNavigator'
 import {useDispatch, useSelector} from 'react-redux'
 import {setUserLogin} from '../components/Auth/AuthActions'
 
-// import AsyncStorage from "@react-native-community/async-storage";
-
 const {width} = Dimensions.get('window')
 
 const AppRouter = () => {

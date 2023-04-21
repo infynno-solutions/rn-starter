@@ -28,17 +28,12 @@ const DrawerItem = (props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={[styles.navItem, {paddingHorizontal: 20, paddingVertical: 5}]}>
+      style={(styles.navItem, styles.drawerNavItemStyle)}>
       <View
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          padding: 10,
-          borderRadius: 8,
-          backgroundColor: props?.currentScreen && Config.primayColor,
-        }}>
+        style={[
+          styles.drawerItemView,
+          {backgroundColor: props?.currentScreen && Config.primayColor},
+        ]}>
         <View style={{width: 30}}>
           {props?.images ? (
             <Image
@@ -84,21 +79,8 @@ function AppDrawerStack() {
         <DrawerContentScrollView
           showsVerticalScrollIndicator={false}
           {...props}>
-          <View
-            style={[
-              styles.navItem,
-              {
-                paddingHorizontal: 10,
-                paddingTop: 8,
-                height: 200,
-                justifyContent: 'center',
-              },
-            ]}>
-            <View
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}>
+          <View style={(styles.navItem, styles.drawerViewStyle)}>
+            <View style={styles.drawerProfileImage}>
               <View style={styles.avatarWrapper}>
                 <Image
                   style={styles.avatarImage}
@@ -111,12 +93,7 @@ function AppDrawerStack() {
                   }
                 />
               </View>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.drawerTitleStyle}>
                 <Text
                   style={[styles.navTitle, {fontWeight: 'bold', fontSize: 20}]}>
                   {profile?.full_name}
@@ -128,14 +105,7 @@ function AppDrawerStack() {
               </View>
             </View>
           </View>
-          <View
-            style={{
-              borderBottomColor: '#00000033',
-              borderBottomWidth: 1,
-              marginVertical: 10,
-            }}
-          />
-
+          <View style={styles.horizontalStyle} />
           <View>
             <DrawerItem
               Title="Home"
@@ -239,33 +209,13 @@ function AppDrawerStack() {
           return {
             headerShown: true,
             headerLeft: () => (
-              <View
-                style={{
-                  marginLeft: 50,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                }}>
+              <View style={styles.headerLeftStyle}>
                 <TouchableOpacity
                   onPress={() => props.navigation.toggleDrawer()}>
                   <Icon name={'menu'} size={40} color={'white'} />
                 </TouchableOpacity>
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginLeft: 20,
-                  }}>
-                  <Image
-                    source={Images.logo}
-                    style={{
-                      width: 50,
-                      height: 40,
-                      marginRight: 20,
-                      tintColor: 'white',
-                    }}
-                  />
+                <View style={styles.headerContentStyle}>
+                  <Image source={Images.logo} style={styles.headerLogoStyle} />
                   <Text style={styles.headerTitleStyle}>{Config.appName}</Text>
                 </View>
               </View>
@@ -348,7 +298,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 50,
-    // borderRadius: '50%',
     margin: 15,
   },
   avatarWrapper: {
@@ -360,5 +309,52 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: 2,
     marginLeft: 20,
+  },
+  drawerItemView: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 8,
+  },
+  drawerNavItemStyle: {paddingHorizontal: 20, paddingVertical: 5},
+  drawerViewStyle: {
+    paddingHorizontal: 10,
+    paddingTop: 8,
+    height: 200,
+    justifyContent: 'center',
+  },
+  drawerProfileImage: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  drawerTitleStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  horizontalStyle: {
+    borderBottomColor: '#00000033',
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+  headerLeftStyle: {
+    marginLeft: 50,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  headerContentStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
+  },
+  headerLogoStyle: {
+    width: 50,
+    height: 40,
+    marginRight: 20,
+    tintColor: 'white',
   },
 })

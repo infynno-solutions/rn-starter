@@ -5,7 +5,7 @@ import ToastMessage from '../Toast'
 import axiosInterceptors from '../../api'
 import PushNotification from 'react-native-push-notification'
 
-export const loginUser = (user, navigation) => {
+export const loginUser = (user) => {
   return (dispatch) => {
     dispatch({type: 'LOGIN_INPROGRESS'})
 
@@ -59,7 +59,7 @@ const updateDeviceToken = async (token) => {
     })
 }
 
-export const logoutUser = (navigation) => {
+export const logoutUser = () => {
   return async (dispatch) => {
     dispatch({type: 'LOGOUT_PENDING'})
     await axiosInterceptors
@@ -135,7 +135,6 @@ export const resetPassword = (options, navigation) => {
     axios
       .post(`${Config.apiUrl}/forgot/password/update`, options)
       .then((res) => {
-        // console.warn(res);
         if (res.data.success === true) {
           ToastMessage(res.data.message)
           dispatch({type: 'RESET_SUCCESS', payload: res.data.message})

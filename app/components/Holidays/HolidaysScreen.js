@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 
 const AnimatedListView = Animated.createAnimatedComponent(FlatList)
 
-const renderHolidaysView = ({item, index}) => {
+const renderHolidaysView = ({item}) => {
   if (item === null) {
     return <View />
   }
