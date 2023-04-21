@@ -1,11 +1,22 @@
 import React from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import {Config} from '../../common'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const IconBox = ({icon, count, name, backgroundColor, color, testID}) => {
+const IconBox = ({
+  icon,
+  count,
+  name,
+  backgroundColor,
+  color,
+  testID,
+  onPress,
+}) => {
   return (
-    <View style={styles.boxContainer} testID={testID}>
+    <TouchableOpacity
+      style={styles.boxContainer}
+      testID={testID}
+      onPress={onPress}>
       <View
         style={[
           {
@@ -26,7 +37,7 @@ const IconBox = ({icon, count, name, backgroundColor, color, testID}) => {
         <Text style={styles.count}>{count}</Text>
         <Text style={styles.boxTitle}>{name}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

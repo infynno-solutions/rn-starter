@@ -110,7 +110,7 @@ class RequestLeave extends Component {
                       : FormatDate(values.startDate)
                   }
                   onPress={() =>
-                    this.setState(prevState => ({
+                    this.setState((prevState) => ({
                       startModalVisible: !prevState.startModalVisible,
                     }))
                   }
@@ -121,10 +121,12 @@ class RequestLeave extends Component {
                     <Calendar
                       name="startDate"
                       markingType={'period'}
-                      dayComponent={props => {
-                        return <CustomDay {...props} />
+                      dayComponent={(props) => {
+                        return (
+                          <CustomDay {...props} startDate={values.startDate} />
+                        )
                       }}
-                      onDayPress={day => {
+                      onDayPress={(day) => {
                         setFieldValue('startDate', day.dateString)
                         this.setState({
                           startDate: day.dateString,
@@ -146,7 +148,7 @@ class RequestLeave extends Component {
                       : FormatDate(values.endDate)
                   }
                   onPress={() =>
-                    this.setState(prevState => ({
+                    this.setState((prevState) => ({
                       endModalVisible: !prevState.endModalVisible,
                     }))
                   }
@@ -155,10 +157,10 @@ class RequestLeave extends Component {
                 {this.state.endModalVisible && (
                   <View style={styles.pickerModal}>
                     <Calendar
-                      dayComponent={props => {
-                        return <CustomDay {...props} />
+                      dayComponent={(props) => {
+                        return <CustomDay {...props} endDate={values.endDate} />
                       }}
-                      onDayPress={day => {
+                      onDayPress={(day) => {
                         setFieldValue('endDate', day.dateString)
                         this.setState({
                           endDate: day.dateString,
@@ -178,7 +180,7 @@ class RequestLeave extends Component {
                   initial={0}
                   formHorizontal={true}
                   labelHorizontal={true}
-                  onPress={value => {
+                  onPress={(value) => {
                     setFieldValue('type', value)
                     this.setState({
                       type: value,
@@ -194,7 +196,7 @@ class RequestLeave extends Component {
                       radio_props={half_props}
                       formHorizontal={true}
                       labelHorizontal={true}
-                      onPress={value => {
+                      onPress={(value) => {
                         setFieldValue('firstSecond', value)
                         this.setState({halfType: value})
                       }}
@@ -210,7 +212,7 @@ class RequestLeave extends Component {
                   error={errors.requestTo}>
                   {state.requestTo.data &&
                     state.requestTo.data.users &&
-                    state.requestTo.data.users.map(user => (
+                    state.requestTo.data.users.map((user) => (
                       <Picker.Item
                         key={user.id}
                         label={user.full_name}
@@ -302,7 +304,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.LeavesReducers,
   }

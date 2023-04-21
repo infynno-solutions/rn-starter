@@ -78,7 +78,9 @@ class EditLeave extends Component {
         <CustomHeader name="Edit Leave" navigation={navigation} />
         <ScrollView>
           {state.getLeave.loading ? (
-            <ActivityIndicator size="large" />
+            <View style={styles.loaderViewStyle}>
+              <ActivityIndicator size="large" />
+            </View>
           ) : (
             <>
               {state.getLeave.data.leave && (
@@ -125,7 +127,7 @@ class EditLeave extends Component {
                             : FormatDate(values.startDate)
                         }
                         onPress={() =>
-                          this.setState(prevState => ({
+                          this.setState((prevState) => ({
                             startModalVisible: !prevState.startModalVisible,
                           }))
                         }
@@ -136,10 +138,10 @@ class EditLeave extends Component {
                           <Calendar
                             name="startDate"
                             markingType={'period'}
-                            dayComponent={props => {
+                            dayComponent={(props) => {
                               return <CustomDay {...props} />
                             }}
-                            onDayPress={day => {
+                            onDayPress={(day) => {
                               setFieldValue('startDate', day.dateString)
                               this.setState({
                                 startDate: day.dateString,
@@ -161,7 +163,7 @@ class EditLeave extends Component {
                             : FormatDate(values.endDate)
                         }
                         onPress={() =>
-                          this.setState(prevState => ({
+                          this.setState((prevState) => ({
                             endModalVisible: !prevState.endModalVisible,
                           }))
                         }
@@ -170,10 +172,10 @@ class EditLeave extends Component {
                       {this.state.endModalVisible && (
                         <View style={styles.pickerModal}>
                           <Calendar
-                            dayComponent={props => {
+                            dayComponent={(props) => {
                               return <CustomDay {...props} />
                             }}
-                            onDayPress={day => {
+                            onDayPress={(day) => {
                               setFieldValue('endDate', day.dateString)
                               this.setState({
                                 endDate: day.dateString,
@@ -193,7 +195,7 @@ class EditLeave extends Component {
                         initial={values.type === 1 ? 0 : 1}
                         formHorizontal={true}
                         labelHorizontal={true}
-                        onPress={value => {
+                        onPress={(value) => {
                           setFieldValue('type', value)
                           this.setState({
                             type: value,
@@ -212,7 +214,7 @@ class EditLeave extends Component {
                             initial={values.firstSecond}
                             formHorizontal={true}
                             labelHorizontal={true}
-                            onPress={value => {
+                            onPress={(value) => {
                               setFieldValue('firstSecond', value)
                               this.setState({halfType: value})
                             }}
@@ -228,7 +230,7 @@ class EditLeave extends Component {
                         error={errors.requestTo}>
                         {state.requestTo.data &&
                           state.requestTo.data.users &&
-                          state.requestTo.data.users.map(user => (
+                          state.requestTo.data.users.map((user) => (
                             <Picker.Item
                               key={user.id}
                               label={user.full_name}
@@ -324,9 +326,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     elevation: 5,
   },
+  loaderViewStyle: {
+    height: '100%',
+    justifyContent: 'center',
+  },
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.LeavesReducers,
   }

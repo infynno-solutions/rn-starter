@@ -1,20 +1,20 @@
 import axiosInterceptors from '../../api'
 import ToastMessage from '../Toast'
 
-export const fetchProfile = navigation => {
-  return dispatch => {
+export const fetchProfile = (navigation) => {
+  return (dispatch) => {
     dispatch({type: 'FETCH_PROFILE_PENDING'})
 
     axiosInterceptors
       .get('/user/profile')
-      .then(res => {
+      .then((res) => {
         if (res.success === true) {
           dispatch({type: 'FETCH_PROFILE_SUCCESS', payload: res.data})
         } else {
           dispatch({type: 'FETCH_PROFILE_FAILURE', payload: res.message})
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: 'FETCH_PROFILE_FAILURE',
           payload: 'Something went wrong.',
@@ -26,12 +26,12 @@ export const fetchProfile = navigation => {
   }
 }
 
-export const updateProfile = profile => {
-  return dispatch => {
+export const updateProfile = (profile) => {
+  return (dispatch) => {
     dispatch({type: 'UPDATE_PROFILE_PENDING'})
     axiosInterceptors
       .post('/user/profile/update', profile)
-      .then(res => {
+      .then((res) => {
         if (res.success === true) {
           dispatch({type: 'UPDATE_PROFILE_SUCCESS', payload: res.data})
           ToastMessage(res.message)
@@ -40,7 +40,7 @@ export const updateProfile = profile => {
           ToastMessage(res.message, true)
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: 'UPDATE_PROFILE_FAILURE',
           payload: 'Something went wrong.',

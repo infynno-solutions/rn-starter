@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import {View, Text as NativeText} from 'react-native'
 import {BarChart, XAxis} from 'react-native-svg-charts'
@@ -57,7 +56,8 @@ const Chart = ({data, name}) => {
           />
         </View>
       </View>
-      <NativeText style={{textAlign: 'center', fontSize: 18, marginBottom: 10}}>
+      <NativeText
+        style={{textAlign: 'center', fontSize: 18, marginVertical: 10}}>
         {name}
       </NativeText>
     </View>

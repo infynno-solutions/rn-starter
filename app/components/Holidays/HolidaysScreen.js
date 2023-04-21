@@ -7,19 +7,39 @@ import {
   Animated,
   RefreshControl,
   StyleSheet,
+  Image,
 } from 'react-native'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchHolidays} from './HolidaysActions'
 import {Config} from '../../common'
 import HolidayCard from './HolidayCard'
+import Images from '../../../assets/images'
 
 const styles = StyleSheet.create({
   noHolidays: {
-    margin: 20,
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   holidayContainer: {
     flex: 1,
     backgroundColor: Config.backgroundColor,
+  },
+  loaderViewStyle: {
+    height: '100%',
+    justifyContent: 'center',
+  },
+  noDataFound: {
+    height: 50,
+    width: 50,
+  },
+  noHolidayText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  contentContainerStyle: {
+    paddingBottom: 20,
   },
 })
 
@@ -33,7 +53,7 @@ const renderHolidaysView = ({item, index}) => {
 }
 
 const HolidaysScreen = () => {
-  const {isLoading, holidays} = useSelector(state => ({
+  const {isLoading, holidays} = useSelector((state) => ({
     isLoading: state.HolidaysReducers.isLoading,
     holidays: state.HolidaysReducers.holidays,
   }))
@@ -50,6 +70,8 @@ const HolidaysScreen = () => {
           keyExtractor={(item, index) => `holidays-${item.id} || ${index}`}
           renderItem={renderHolidaysView}
           refreshing={isLoading}
+          contentContainerStyle={styles.contentContainerStyle}
+          showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
               refreshing={isLoading}
@@ -58,12 +80,15 @@ const HolidaysScreen = () => {
           }
           ListEmptyComponent={
             <View style={styles.noHolidays}>
-              <Text>No Holidays.</Text>
+              <Image source={Images.noDataFound} style={styles.noDataFound} />
+              <Text style={styles.noHolidayText}>No Holidays.</Text>
             </View>
           }
         />
       ) : (
-        <ActivityIndicator size="large" color={Config.primayColor} />
+        <View style={styles.loaderViewStyle}>
+          <ActivityIndicator size="large" color={Config.primayColor} />
+        </View>
       )}
     </View>
   )

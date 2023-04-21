@@ -1,12 +1,5 @@
 import React, {Component} from 'react'
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  ProgressBarAndroid,
-} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
 import {Config} from '../../common'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {connect} from 'react-redux'
@@ -15,6 +8,7 @@ import moment from 'moment'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import {ProgressBar} from '@react-native-community/progress-bar-android'
 
 function formatTimeString(time, showMsecs) {
   let msecs = time % 1000
@@ -184,7 +178,7 @@ class TaskCard extends Component {
           <Text>Tracked: {task.total_tracked_hours.toFixed(2)}</Text>
           <Text>Total: {task.hours}</Text>
         </View>
-        <ProgressBarAndroid
+        <ProgressBar
           styleAttr="Horizontal"
           indeterminate={false}
           progress={progress}
@@ -206,7 +200,7 @@ class TaskCard extends Component {
                   note: task.description,
                 }}
                 validationSchema={this.taskValidation}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                   // console.warn(values);
                   this.setState({noteVisible: false})
                   await this.endTimer(values)
@@ -224,10 +218,14 @@ class TaskCard extends Component {
                       <TextInput
                         placeholder="What you have worked?"
                         multiline={true}
+                        underlineColorAndroid="transparent"
                         onBlur={handleBlur('note')}
                         onChangeText={handleChange('note')}
                         value={values.note}
                         error={errors.note}
+                        textAlignVertical="top"
+                        numberOfLines={10}
+                        style={styles.textArea}
                       />
                       {errors.note && (
                         <Icon
@@ -329,13 +327,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   note: {
-    backgroundColor: '#fff',
-    marginBottom: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderColor: '#808080',
+    borderWidth: 1,
+    padding: 5,
+    marginTop: 25,
+    borderRadius: 4,
+  },
+  textArea: {
+    height: 150,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    color: 'black',
   },
   submit: {
     backgroundColor: Config.successColor,
@@ -365,10 +367,11 @@ const styles = StyleSheet.create({
   },
   buttonsWrapper: {
     flexDirection: 'row',
+    marginTop: 20,
   },
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.TasksReducers,
   }

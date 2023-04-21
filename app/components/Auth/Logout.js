@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons'
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native'
 import {Config} from '../../common'
 import {connect} from 'react-redux'
 import {logoutUser} from './AuthActions'
 
-function formatTimeString(time, showMsecs) {
+export function formatTimeString(time, showMsecs) {
   let msecs = time % 1000
 
   if (msecs < 10) {
@@ -65,21 +64,19 @@ class Logout extends Component {
               </View>
             </TouchableOpacity>
           )}
-        <TouchableOpacity
-          testID={'logoutButton'}
-          onPress={async () => {
-            await this.props.logoutUser(navigation)
-          }}
-          style={styles.iconContainer}>
-          <Icon name="logout" size={30} color="#fff" />
-        </TouchableOpacity>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  actionContainer: {flex: 1, flexDirection: 'row', alignItems: 'center'},
+  actionContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+    width: 90,
+  },
   timerWrapper: {
     backgroundColor: Config.accentColor,
     paddingVertical: 7,
@@ -93,7 +90,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.AuthReducers,
     task: state.TasksReducers,

@@ -7,6 +7,7 @@ import {
   FlatList,
   Animated,
   RefreshControl,
+  Image,
 } from 'react-native'
 import LeaveCard from './LeaveCard'
 import RequestedLeaveCard from './RequestedLeaveCard'
@@ -14,6 +15,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Config} from '../../common'
 import {connect} from 'react-redux'
 import {fetchLeaves} from './LeavesActions'
+import {getCurrentScreen} from '../Auth/AuthActions'
+import Images from '../../../assets/images'
 
 const AnimatedListView = Animated.createAnimatedComponent(FlatList)
 class LeavesScreen extends Component {
@@ -22,12 +25,14 @@ class LeavesScreen extends Component {
   })
 
   state = {
-    scrollY: new Animated.Value(0),
     activeTab: 'myleaves',
   }
 
   componentDidMount() {
     this.fetchLeaves()
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.props.getCurrentScreen('Leaves')
+    })
   }
 
   fetchLeaves = async () => {
@@ -56,7 +61,9 @@ class LeavesScreen extends Component {
       <View style={styles.container}>
         <View style={styles.tabsWrapper}>
           <TouchableOpacity
-            onPress={() => this.setState({activeTab: 'myleaves'})}
+            onPress={() => {
+              this.setState({activeTab: 'myleaves'})
+            }}
             style={
               this.state.activeTab === 'myleaves'
                 ? styles.activeTab
@@ -72,7 +79,9 @@ class LeavesScreen extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.setState({activeTab: 'requestedleaves'})}
+            onPress={() => {
+              this.setState({activeTab: 'requestedleaves'})
+            }}
             style={
               this.state.activeTab === 'requestedleaves'
                 ? styles.activeTab
@@ -102,7 +111,8 @@ class LeavesScreen extends Component {
             }
             ListEmptyComponent={
               <View style={styles.noLeaves}>
-                <Text>No Leaves Requested.</Text>
+                <Image source={Images.noDataFound} style={styles.noDataFound} />
+                <Text style={styles.noLeaveText}>No Leaves Requested.</Text>
               </View>
             }
           />
@@ -121,7 +131,8 @@ class LeavesScreen extends Component {
             }
             ListEmptyComponent={
               <View style={styles.noLeaves}>
-                <Text>No Leaves Assigned.</Text>
+                <Image source={Images.noDataFound} style={styles.noDataFound} />
+                <Text style={styles.noLeaveText}>No Leaves Assigned.</Text>
               </View>
             }
           />
@@ -148,8 +159,20 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 5,
   },
+
   noLeaves: {
-    margin: 20,
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noDataFound: {
+    height: 50,
+    width: 50,
+  },
+  noLeaveText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   tabsWrapper: {
     flexDirection: 'row',
@@ -158,7 +181,7 @@ const styles = StyleSheet.create({
     elevation: 0.5,
     backgroundColor: '#fff',
     borderRadius: 5,
-    marginTop: 15,
+    marginTop: 35,
   },
   tab: {
     padding: 15,
@@ -189,10 +212,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.LeavesReducers,
   }
 }
 
-export default connect(mapStateToProps, {fetchLeaves})(LeavesScreen)
+export default connect(mapStateToProps, {fetchLeaves, getCurrentScreen})(
+  LeavesScreen
+)

@@ -19,6 +19,9 @@ const initialState = {
     error: '',
     data: null,
   },
+  isUserLogin: false,
+  token: '',
+  currentScreen: 'Dashboard',
 }
 
 export default function AuthReducers(state = initialState, action) {
@@ -42,6 +45,13 @@ export default function AuthReducers(state = initialState, action) {
         message: action.payload,
         user: null,
       }
+    case 'SET_USER_DATA':
+      return {
+        ...state,
+        isUserLogin: action.payload.isLogin,
+        token: action.payload.token,
+      }
+
     case 'LOGOUT_INPROGRESS':
       return {...state, isInprogress: true, isError: false, message: ''}
     case 'LOGOUT_SUCCESS':
@@ -149,6 +159,11 @@ export default function AuthReducers(state = initialState, action) {
         message: '',
         isLoggedIn: false,
         user: null,
+      }
+    case 'GET_CURRENT_SCREEN':
+      return {
+        ...state,
+        currentScreen: action?.payload,
       }
     default:
       return state

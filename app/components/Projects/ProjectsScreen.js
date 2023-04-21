@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {
   View,
   Text,
@@ -9,28 +9,36 @@ import {
   RefreshControl,
 } from 'react-native'
 import ProjectCard from './ProjectCard'
-import {connect} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {fetchProjects} from './ProjectsActions'
+import {getCurrentScreen} from '../Auth/AuthActions'
 import {Config} from '../../common'
+import {useFocusEffect} from '@react-navigation/core'
 
 const AnimatedListView = Animated.createAnimatedComponent(FlatList)
-class ProjectsScreen extends Component {
-  static navigationOptions = () => ({
-    header: null,
-  })
 
-  componentDidMount() {
-    this.fetchProjects()
-  }
+const ProjectsScreen = (props) => {
+  const dispatch = useDispatch()
+  const {isLoading, projects} = useSelector((state) => state.ProjectsReducers)
 
-  fetchProjects = async () => {
-    const {navigation} = this.props
+  const fetchProjectsFunction = useCallback(async () => {
+    const {navigation} = props
+    dispatch(fetchProjects(navigation))
+  }, [dispatch, props])
 
-    await this.props.fetchProjects(navigation)
-  }
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(getCurrentScreen('Projects'))
+      return () => {}
+    }, [dispatch])
+  )
 
-  renderProjectView = ({item, index}) => {
-    const {navigation} = this.props
+  useEffect(() => {
+    fetchProjectsFunction()
+  }, [fetchProjectsFunction])
+
+  const renderProjectView = ({item, index}) => {
+    const {navigation} = props
     if (item === null) {
       return <View />
     }
@@ -38,40 +46,40 @@ class ProjectsScreen extends Component {
     return <ProjectCard navigation={navigation} project={item} key={item.id} />
   }
 
-  render() {
-    const {state, navigation} = this.props
-
-    return (
-      <View style={styles.projects} testID={'projectscreen'}>
-        {state.isLoading === true ? (
+  return (
+    <View style={styles.projects} testID={'projectscreen'}>
+      {isLoading === true ? (
+        <View style={styles.loaderViewStyle}>
           <ActivityIndicator size="large" />
-        ) : (
-          <View>
-            {state.projects && (
-              <AnimatedListView
-                data={state.projects.projects}
-                keyExtractor={(item, index) => `project-${item.id} || ${index}`}
-                renderItem={this.renderProjectView}
-                refreshing={state.isLoading}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={state.isLoading}
-                    onRefresh={() => this.fetchProjects(navigation)}
-                  />
-                }
-                ListEmptyComponent={
-                  <View style={styles.noProjects}>
-                    <Text>No Projects Assigned.</Text>
-                  </View>
-                }
-              />
-            )}
-          </View>
-        )}
-      </View>
-    )
-  }
+        </View>
+      ) : (
+        <View>
+          {projects && (
+            <AnimatedListView
+              data={projects.projects}
+              keyExtractor={(item, index) => `project-${item.id} || ${index}`}
+              renderItem={renderProjectView}
+              refreshing={isLoading}
+              refreshControl={
+                <RefreshControl
+                  refreshing={isLoading}
+                  onRefresh={() => fetchProjects(props?.navigation)}
+                />
+              }
+              ListEmptyComponent={
+                <View style={styles.noProjects}>
+                  <Text>No Projects Assigned.</Text>
+                </View>
+              }
+            />
+          )}
+        </View>
+      )}
+    </View>
+  )
 }
+
+export default ProjectsScreen
 
 const styles = StyleSheet.create({
   projects: {
@@ -81,11 +89,8 @@ const styles = StyleSheet.create({
   noProjects: {
     margin: 20,
   },
+  loaderViewStyle: {
+    height: '100%',
+    justifyContent: 'center',
+  },
 })
-
-const mapStateToProps = state => {
-  return {
-    state: state.ProjectsReducers,
-  }
-}
-export default connect(mapStateToProps, {fetchProjects})(ProjectsScreen)

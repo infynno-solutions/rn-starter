@@ -55,7 +55,10 @@ class LoginScreen extends Component {
           </View>
         </View>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={{
+            email: 'navin.infynno@gmail.com',
+            password: 'Navin@123',
+          }}
           validationSchema={this.loginSchema}
           onSubmit={async (values, actions) => {
             const user = {
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
   logoImage: {width: width / 2, height: '100%', resizeMode: 'contain'},
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.AuthReducers,
   }

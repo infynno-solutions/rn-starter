@@ -6,12 +6,15 @@ import {
   Text,
   View,
   FlatList,
+  Image,
 } from 'react-native'
 import Animated from 'react-native-reanimated'
 import {Config} from '../../common'
 import {connect} from 'react-redux'
 import {fetchInterviews} from './InterviewActions'
 import InterviewCard from './InterviewCard'
+import CustomHeader from '../CustomHeader'
+import Images from '../../../assets/images'
 
 const AnimatedListView = Animated.createAnimatedComponent(FlatList)
 
@@ -26,7 +29,6 @@ class InterviewScreen extends Component {
 
   fetchInterviews = async () => {
     const {navigation} = this.props
-
     await this.props.fetchInterviews(navigation)
   }
 
@@ -46,8 +48,11 @@ class InterviewScreen extends Component {
 
     return (
       <View style={styles.interviews} testID={'projectscreen'}>
+        <CustomHeader name="Interviews" navigation={navigation} />
         {state.isLoading === true ? (
-          <ActivityIndicator size="large" />
+          <View style={styles.loaderViewStyle}>
+            <ActivityIndicator size="large" />
+          </View>
         ) : (
           <View>
             {state.interviews && (
@@ -63,8 +68,14 @@ class InterviewScreen extends Component {
                   />
                 }
                 ListEmptyComponent={
-                  <View style={styles.noProjects}>
-                    <Text>No Interviews Assigned.</Text>
+                  <View style={styles.noInterview}>
+                    <Image
+                      source={Images.noDataFound}
+                      style={styles.noDataFound}
+                    />
+                    <Text style={styles.noInterViewText}>
+                      No Interviews Assigned.
+                    </Text>
                   </View>
                 }
               />
@@ -84,9 +95,27 @@ const styles = StyleSheet.create({
   noInterviews: {
     margin: 20,
   },
+  loaderViewStyle: {
+    height: '100%',
+    justifyContent: 'center',
+  },
+  noInterview: {
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noInterViewText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  noDataFound: {
+    height: 50,
+    width: 50,
+  },
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.InterviewReducers,
   }

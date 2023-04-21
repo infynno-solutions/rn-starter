@@ -2,18 +2,17 @@ import React, {Component} from 'react'
 import {View, StyleSheet, StatusBar} from 'react-native'
 import 'react-native-gesture-handler'
 import {Config} from './app/common'
-import RootRouter from './app/navigation/RootRouter'
 import {Provider} from 'react-redux'
 import {store, persistor} from './app/store'
 import {PersistGate} from 'redux-persist/es/integration/react'
-import {Client, Configuration} from 'bugsnag-react-native'
+import {Configuration} from 'bugsnag-react-native'
 import PushNotification from 'react-native-push-notification'
 import SplashScreen from 'react-native-splash-screen'
+import AppRouter from './app/navigation/Router'
 
 const config = new Configuration('81610f634e956f713399d1f3efc6cc76')
 config.codeBundleId = '2.0.0'
-// eslint-disable-next-line no-unused-vars
-const bugsnag = new Client(config)
+// const bugsnag = new Client(config)
 //TODO: Button to check for app updates
 class App extends Component {
   constructor(props) {
@@ -27,10 +26,8 @@ class App extends Component {
 
   notification = () => {
     PushNotification.configure({
-      onRegister: async function(token) {
-        // console.log('TOKEN:', token);
-      },
-      onNotification: notification => {
+      onRegister: async function (token) {},
+      onNotification: (notification) => {
         // console.warn('REMOTE NOTIFICATION ==>', notification);
       },
 
@@ -49,7 +46,7 @@ class App extends Component {
               backgroundColor={Config.primaryLight}
               barStyle="light-content"
             />
-            <RootRouter />
+            <AppRouter />
           </View>
         </PersistGate>
       </Provider>

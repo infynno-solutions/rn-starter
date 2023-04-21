@@ -8,7 +8,8 @@ import {
   ActivityIndicator,
   Image,
   RefreshControl,
-  Picker,
+  Platform,
+  Dimensions,
 } from 'react-native'
 import {Config} from '../../common'
 import {Formik} from 'formik'
@@ -18,10 +19,22 @@ import {connect} from 'react-redux'
 import {fetchProfile, updateProfile} from './ProfileActions'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import FormatDate from '../FormatDate'
-import ImagePicker from 'react-native-image-picker'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
 import RadioForm from 'react-native-simple-radio-button'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ToastMessage from '../Toast'
+import {Picker} from '@react-native-picker/picker'
+import {PERMISSIONS, request, check} from 'react-native-permissions'
+import ImgToBase64 from 'react-native-image-base64'
+import {getCurrentScreen} from '../Auth/AuthActions'
+
+const RESULTS = {
+  UNAVAILABLE: 'unavailable',
+  DENIED: 'denied',
+  LIMITED: 'limited',
+  GRANTED: 'granted',
+  BLOCKED: 'blocked',
+}
 
 class EditProfile extends Component {
   static navigationOptions = () => ({
@@ -36,6 +49,9 @@ class EditProfile extends Component {
 
   componentDidMount() {
     this.fetchProfile()
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.props.getCurrentScreen('Profile')
+    })
   }
 
   fetchProfile = async () => {
@@ -66,6 +82,89 @@ class EditProfile extends Component {
 
     const {state} = this.props
 
+    const getStatus = (
+      result,
+      handleGranted,
+      handleDenied,
+      handleUnavailable,
+      handleLimited,
+      handleBlocked
+    ) => {
+      switch (result) {
+        case RESULTS.UNAVAILABLE:
+          handleUnavailable && handleUnavailable()
+          break
+        case RESULTS.DENIED:
+          handleDenied && handleDenied()
+          break
+        case RESULTS.LIMITED:
+          handleLimited && handleLimited()
+          break
+        case RESULTS.GRANTED:
+          handleGranted && handleGranted()
+          break
+        case RESULTS.BLOCKED:
+          handleBlocked && handleBlocked()
+          break
+      }
+    }
+
+    const _pickImageFromCamera = async (setFieldValue) => {
+      let options = {
+        allowEditing: true,
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      }
+      launchCamera(options, (response) => {
+        if (response.didCancel) {
+        } else {
+          if (response?.assets?.[0]?.fileSize > 5242880) {
+            ToastMessage('Uploaded image is too large.', true)
+          } else {
+            const source = {uri: response?.assets?.[0]?.uri}
+            if (source?.uri) {
+              if (setFieldValue) {
+                setFieldValue('previewImage', source?.uri)
+                ImgToBase64.getBase64String(source?.uri)
+                  .then((base64String) => setFieldValue('photo', base64String))
+                  .catch((err) => console.log('err', err))
+              }
+            }
+          }
+        }
+      })
+    }
+
+    const _pickImageFromGallery = async (setFieldValue) => {
+      let options = {
+        allowEditing: true,
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      }
+      launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+        } else {
+          if (response?.assets?.[0]?.fileSize > 5242880) {
+            ToastMessage('Uploaded image is too large.', true)
+          } else {
+            const source = {uri: response?.assets?.[0]?.uri}
+            if (source?.uri) {
+              if (setFieldValue) {
+                setFieldValue('previewImage', source?.uri)
+                ImgToBase64.getBase64String(source?.uri)
+                  .then((base64String) => setFieldValue('photo', base64String))
+                  .catch((err) => console.log('err', err))
+              }
+            }
+          }
+        }
+      })
+    }
+
     return (
       <ScrollView
         refreshControl={
@@ -75,7 +174,9 @@ class EditProfile extends Component {
           />
         }>
         {state.isLoading ? (
-          <ActivityIndicator size="large" />
+          <View style={styles.loaderViewStyle}>
+            <ActivityIndicator size="large" />
+          </View>
         ) : (
           <View>
             {state.profile && (
@@ -98,7 +199,7 @@ class EditProfile extends Component {
                   previewImage: '',
                 }}
                 validationSchema={UpdateSchema}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                   // console.warn(values);
                   values.previewImage === '' && delete values.photo
                   await this.props.updateProfile(values)
@@ -146,33 +247,30 @@ class EditProfile extends Component {
                         <TouchableOpacity
                           style={styles.avatarUpload}
                           onPress={() => {
-                            const options = {}
-
-                            ImagePicker.launchCamera(options, response => {
-                              // console.warn(response.fileSize);
-                              if (response.didCancel) {
-                                // console.log('User cancelled image picker');
-                              } else if (response.error) {
-                                // console.log(
-                                //   'ImagePicker Error: ',
-                                //   response.error,
-                                // );
-                              } else {
-                                if (response.fileSize > 5242880) {
-                                  ToastMessage(
-                                    'Uploaded image is too large.',
-                                    true
-                                  )
-                                } else {
-                                  setFieldValue(
-                                    'previewImage',
-                                    `data:${response.type};base64, ${response.data}
-                                  `
-                                  )
-                                  setFieldValue('photo', response.data)
-                                }
-                              }
-                            })
+                            setTimeout(() => {
+                              check(
+                                Platform.OS === 'ios'
+                                  ? PERMISSIONS.IOS.CAMERA
+                                  : PERMISSIONS.ANDROID.CAMERA
+                              ).then((result) =>
+                                getStatus(
+                                  result,
+                                  _pickImageFromCamera(setFieldValue),
+                                  () => {
+                                    request(
+                                      Platform.OS === 'ios'
+                                        ? PERMISSIONS.IOS.CAMERA
+                                        : PERMISSIONS.ANDROID.CAMERA
+                                    ).then((res) =>
+                                      getStatus(
+                                        res,
+                                        _pickImageFromCamera(setFieldValue)
+                                      )
+                                    )
+                                  }
+                                )
+                              )
+                            }, 500)
                           }}>
                           <Icon name="camera" size={20} color="#fff" />
                           <Text style={styles.imageUploadText}>
@@ -182,35 +280,31 @@ class EditProfile extends Component {
                         <TouchableOpacity
                           style={styles.avatarUpload}
                           onPress={() => {
-                            const options = {}
-                            ImagePicker.launchImageLibrary(
-                              options,
-                              response => {
-                                // console.warn(response.fileSize);
-                                if (response.didCancel) {
-                                  // console.log('User cancelled image picker');
-                                } else if (response.error) {
-                                  // console.log(
-                                  //   'ImagePicker Error: ',
-                                  //   response.error,
-                                  // );
-                                } else {
-                                  if (response.fileSize > 5242880) {
-                                    ToastMessage(
-                                      'Uploaded image is too large.',
-                                      true
+                            setTimeout(() => {
+                              check(
+                                Platform.OS === 'ios'
+                                  ? PERMISSIONS.IOS.PHOTO_LIBRARY
+                                  : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
+                              ).then((result) =>
+                                getStatus(
+                                  result,
+                                  _pickImageFromGallery(setFieldValue),
+                                  () => {
+                                    request(
+                                      Platform.OS === 'ios'
+                                        ? PERMISSIONS.IOS.PHOTO_LIBRARY
+                                        : PERMISSIONS.ANDROID
+                                            .READ_EXTERNAL_STORAGE
+                                    ).then((res) =>
+                                      getStatus(
+                                        res,
+                                        _pickImageFromGallery(setFieldValue)
+                                      )
                                     )
-                                  } else {
-                                    setFieldValue(
-                                      'previewImage',
-                                      `data:${response.type};base64, ${response.data}
-                                    `
-                                    )
-                                    setFieldValue('photo', response.data)
                                   }
-                                }
-                              }
-                            )
+                                )
+                              )
+                            }, 500)
                           }}>
                           <Icon name="image" size={20} color="#fff" />
                           <Text style={styles.imageUploadText}>Upload</Text>
@@ -267,11 +361,10 @@ class EditProfile extends Component {
                     <RadioForm
                       style={styles.radioButtons}
                       radio_props={gender_props}
-                      // eslint-disable-next-line eqeqeq
-                      initial={values.gender == 0 ? 0 : 1}
+                      initial={values.gender === 0 ? 0 : 1}
                       formHorizontal={true}
                       labelHorizontal={true}
-                      onPress={value => {
+                      onPress={(value) => {
                         setFieldValue('gender', value)
                       }}
                     />
@@ -279,11 +372,10 @@ class EditProfile extends Component {
                     <RadioForm
                       style={styles.radioButtons}
                       radio_props={married_props}
-                      // eslint-disable-next-line eqeqeq
-                      initial={values.marital_status == 1 ? 0 : 1}
+                      initial={values.marital_status === 1 ? 0 : 1}
                       formHorizontal={true}
                       labelHorizontal={true}
-                      onPress={value => {
+                      onPress={(value) => {
                         setFieldValue('marital_status', value)
                         this.setState({
                           anvVisible: value === '1' ? true : false,
@@ -471,13 +563,19 @@ const styles = StyleSheet.create({
   radioButtons: {
     marginVertical: 8,
   },
+  loaderViewStyle: {
+    height: Dimensions.get('screen').height,
+    justifyContent: 'center',
+  },
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     state: state.ProfileReducers,
   }
 }
-export default connect(mapStateToProps, {fetchProfile, updateProfile})(
-  EditProfile
-)
+export default connect(mapStateToProps, {
+  fetchProfile,
+  updateProfile,
+  getCurrentScreen,
+})(EditProfile)

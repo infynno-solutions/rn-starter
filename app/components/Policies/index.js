@@ -1,8 +1,17 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react'
-import {ScrollView, StyleSheet, ActivityIndicator} from 'react-native'
+import {
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+  useWindowDimensions,
+  View,
+  Dimensions,
+} from 'react-native'
 import {fetchPolicies} from './PolicyActions'
 import Accordion from '../Shared/Accordion'
 import {useSelector, useDispatch} from 'react-redux'
+import CustomHeader from '../CustomHeader'
 
 const styles = StyleSheet.create({
   policyContainer: {
@@ -10,10 +19,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const Policies = () => {
+const Policies = (props) => {
+  const {width} = useWindowDimensions()
+
   const [expanded, setExpanded] = useState('')
 
-  const {loading, policies} = useSelector(state => ({
+  const {loading, policies} = useSelector((state) => ({
     loading: state.PolicyReducers.loading,
     policies: state.PolicyReducers.policies,
   }))
@@ -24,8 +35,16 @@ const Policies = () => {
 
   return (
     <ScrollView style={styles.policyContainer}>
+      <CustomHeader name="Policies" navigation={props.navigation} />
+
       {loading ? (
-        <ActivityIndicator size="large" />
+        <View
+          style={{
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="large" />
+        </View>
       ) : (
         <>
           {policies &&
@@ -37,6 +56,7 @@ const Policies = () => {
                   setExpanded(expanded === '' ? policy.id : '')
                 }
                 expanded={expanded}
+                width={width}
               />
             ))}
         </>

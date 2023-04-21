@@ -4,16 +4,27 @@ import Day from 'react-native-calendars/src/calendar/day/basic'
 
 class CustomDay extends Component {
   render() {
-    const {date, marking} = this.props
-
-    marking.disabled =
+    const {date, marking, startDate, endDate} = this.props
+    const start_date = new Date(startDate)
+    const end_date = new Date(endDate)
+    const disabled =
       isSunday(date.timestamp) ||
       (isPast(date.timestamp) && !isToday(date.timestamp)) ||
-      (isSaturday(date.timestamp) && getWeekOfMonth(date.timestamp) === 1) ||
-      (isSaturday(date.timestamp) && getWeekOfMonth(date.timestamp) === 3)
-    // ||(isSaturday(date.timestamp) && getWeekOfMonth(date.timestamp) === 5);
-    marking.disableTouchEvent = marking.disabled === true ? true : false
-    return <Day {...this.props} />
+      (isSaturday(date.timestamp) &&
+        getWeekOfMonth(date.timestamp) % 2 === 1) ||
+      (start_date && start_date.getTime() > date.timestamp) ||
+      (end_date && end_date.getTime() > date.timestamp)
+
+    return (
+      <Day
+        {...this.props}
+        marking={{
+          ...marking,
+          disabled,
+        }}
+        disableTouchEvent={disabled}
+      />
+    )
   }
 }
 

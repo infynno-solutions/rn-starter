@@ -3,7 +3,7 @@ import {Config} from '../common'
 
 const ToastMessage = (message, error = false) =>
   Snackbar.show({
-    title: message,
+    text: message,
     duration: Snackbar.LENGTH_LONG,
     backgroundColor: error ? Config.errorColor : Config.successColor,
   })

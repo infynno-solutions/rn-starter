@@ -1,13 +1,7 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import HTML from 'react-native-render-html'
+import RenderHtml from 'react-native-render-html'
 
 const styles = StyleSheet.create({
   titleWrapper: {
@@ -24,7 +18,7 @@ const styles = StyleSheet.create({
   details: {paddingVertical: 10, paddingHorizontal: 15},
 })
 
-const Accordion = ({policy, expanded, toggleExpand}) => (
+const Accordion = ({policy, expanded, toggleExpand, width}) => (
   <View>
     <TouchableOpacity onPress={() => toggleExpand(policy.id)}>
       <View style={styles.titleWrapper}>
@@ -38,10 +32,7 @@ const Accordion = ({policy, expanded, toggleExpand}) => (
     </TouchableOpacity>
     {expanded === policy.id && (
       <View style={styles.details}>
-        <HTML
-          html={policy.detail}
-          imagesMaxWidth={Dimensions.get('window').width}
-        />
+        <RenderHtml contentWidth={width} source={{html: policy.detail}} />
       </View>
     )}
   </View>
