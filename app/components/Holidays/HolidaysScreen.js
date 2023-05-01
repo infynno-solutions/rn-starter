@@ -52,7 +52,7 @@ const renderHolidaysView = ({item}) => {
   return <HolidayCard holiday={item} key={item.id} />
 }
 
-const HolidaysScreen = () => {
+const HolidaysScreen = ({navigation}) => {
   const {isLoading, holidays} = useSelector((state) => ({
     isLoading: state.HolidaysReducers.isLoading,
     holidays: state.HolidaysReducers.holidays,
@@ -60,7 +60,10 @@ const HolidaysScreen = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => dispatch(fetchHolidays()), [dispatch])
+  useEffect(
+    () => dispatch(fetchHolidays(navigation, false)),
+    [dispatch, navigation]
+  )
 
   return (
     <View style={styles.holidayContainer}>
@@ -75,7 +78,7 @@ const HolidaysScreen = () => {
           refreshControl={
             <RefreshControl
               refreshing={isLoading}
-              onRefresh={() => dispatch(fetchHolidays())}
+              onRefresh={() => dispatch(fetchHolidays(navigation, true))}
             />
           }
           ListEmptyComponent={

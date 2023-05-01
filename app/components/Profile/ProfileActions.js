@@ -1,9 +1,9 @@
 import axiosInterceptors from '../../api'
 import ToastMessage from '../Toast'
 
-export const fetchProfile = (navigation) => {
+export const fetchProfile = (navigation, isRefresh) => {
   return (dispatch) => {
-    dispatch({type: 'FETCH_PROFILE_PENDING'})
+    isRefresh && dispatch({type: 'FETCH_PROFILE_PENDING'})
 
     axiosInterceptors
       .get('/user/profile')

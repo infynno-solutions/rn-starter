@@ -48,15 +48,15 @@ class EditProfile extends Component {
   }
 
   componentDidMount() {
-    this.fetchProfile()
+    this.fetchProfile(true)
     this.focusListener = this.props.navigation.addListener('focus', () => {
       this.props.getCurrentScreen('Profile')
     })
   }
 
-  fetchProfile = async () => {
+  fetchProfile = async (isRefresh) => {
     const {navigation} = this.props
-    await this.props.fetchProfile(navigation)
+    await this.props.fetchProfile(navigation, isRefresh)
   }
 
   render() {
@@ -208,7 +208,7 @@ class EditProfile extends Component {
         refreshControl={
           <RefreshControl
             refreshing={state.isLoading}
-            onRefresh={async () => await this.fetchProfile()}
+            onRefresh={async () => await this.fetchProfile(false)}
           />
         }>
         {state.isLoading ? (
