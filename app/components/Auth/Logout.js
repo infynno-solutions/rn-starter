@@ -32,6 +32,13 @@ export function formatTimeString(time, showMsecs) {
   return formatted
 }
 class Logout extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isVisible: false,
+    }
+  }
+
   componentDidUpdate(prevPros) {
     // eslint-disable-next-line eqeqeq
     if (this.props != prevPros) {
@@ -46,24 +53,24 @@ class Logout extends Component {
     return (
       <View style={styles.actionContainer}>
         {this.props.task.activeTask &&
-          this.props.task.activeTask.start !== null && (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('ProjectDetails', {
-                  projectId: this.props.task.activeTask.project,
-                  projectName: this.props.task.activeTask.projectName,
-                })
-              }>
-              <View style={styles.timerWrapper}>
-                <Text style={styles.timerText}>
-                  {formatTimeString(
-                    new Date().getTime() -
-                      new Date(this.props.task.activeTask.start).getTime()
-                  )}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
+        this.props.task.activeTask.start !== null ? (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('ProjectDetails', {
+                projectId: this.props.task.activeTask.project,
+                projectName: this.props.task.activeTask.projectName,
+              })
+            }>
+            <View style={styles.timerWrapper}>
+              <Text style={styles.timerText}>
+                {formatTimeString(
+                  new Date().getTime() -
+                    new Date(this.props.task.activeTask.start).getTime()
+                )}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ) : null}
       </View>
     )
   }
@@ -74,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 20,
+    marginRight: 5,
     width: 90,
   },
   timerWrapper: {
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 5,
   },
-  timerText: {color: '#fff'},
+  timerText: {color: '#fff', fontSize: 12},
   iconContainer: {
     marginRight: 10,
     marginLeft: 10,
