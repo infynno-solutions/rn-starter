@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {ScrollView, StyleSheet, RefreshControl, View} from 'react-native'
 import IconBox from '../Shared/IconBox'
 import {Config} from '../../common'
@@ -10,6 +10,8 @@ import SplashScreen from 'react-native-splash-screen'
 import {fetchProfile} from '../Profile/ProfileActions'
 import {getCurrentScreen} from '../Auth/AuthActions'
 import {useFocusEffect} from '@react-navigation/core'
+import {Picker} from '@react-native-picker/picker'
+import {getWeeksInCurrentMonth} from '../../utills/helper'
 
 SplashScreen.hide()
 
@@ -21,6 +23,15 @@ const Dashboard = ({navigation}) => {
   const dispatch = useDispatch()
   const currentMonth = moment().format('MMM YYYY')
 
+  const [currentWeek, setCurrentWeek] = useState({
+    final_punch: moment().isoWeekday(1).week(),
+    final_work: moment().isoWeekday(1).week(),
+  })
+  const [finalData, setFinalData] = useState({
+    final_punch: data?.final_punch || [],
+    final_work: data?.final_work || [],
+  })
+
   useFocusEffect(
     React.useCallback(() => {
       dispatch(getCurrentScreen('Dashboard'))
@@ -30,7 +41,7 @@ const Dashboard = ({navigation}) => {
 
   useEffect(() => {
     dispatch(fetchStats(navigation))
-    dispatch(fetchProfile(navigation))
+    dispatch(fetchProfile(navigation, true))
   }, [dispatch, navigation])
 
   const styles = StyleSheet.create({
@@ -44,6 +55,13 @@ const Dashboard = ({navigation}) => {
     },
   })
 
+  useEffect(() => {
+    setFinalData({
+      final_punch: data?.final_punch || [],
+      final_work: data?.final_work || [],
+    })
+  }, [data, currentWeek])
+
   return (
     <>
       <ScrollView
@@ -56,6 +74,10 @@ const Dashboard = ({navigation}) => {
               dispatch(fetchStats(navigation))
               dispatch(fetchPunchLogs(navigation))
               dispatch(fetchStats(navigation))
+              setCurrentWeek({
+                final_work: moment().isoWeekday(1).week(),
+                final_punch: moment().isoWeekday(1).week(),
+              })
             }}
           />
         }>
@@ -66,7 +88,9 @@ const Dashboard = ({navigation}) => {
           count={`${data ? data.leave_count : '0'}/12`}
           name="Leave Taken / Total Leaves"
           testID={'leavesCount'}
-          onPress={() => navigation.navigate('Leaves')}
+          onPress={() =>
+            navigation.navigate('BottomNavigator', {screen: 'LeavesStack'})
+          }
         />
         <IconBox
           backgroundColor="rgba(57,154,242,.4)"
@@ -86,9 +110,61 @@ const Dashboard = ({navigation}) => {
         />
         {data && data.final_punch && data.final_punch && (
           <>
-            <Chart data={data.final_punch} name="Punchlogs" />
+            <Picker
+              selectedValue={currentWeek.final_punch}
+              mode="dropdown"
+              placeholder={'Select week range'}
+              onValueChange={(itemValue) =>
+                setCurrentWeek({
+                  ...currentWeek,
+                  final_punch: itemValue,
+                })
+              }>
+              {getWeeksInCurrentMonth()?.map((week, index) => {
+                return (
+                  <Picker.Item
+                    key={index}
+                    label={week.title}
+                    value={week.weekNumber}
+                  />
+                )
+              })}
+            </Picker>
+            <Chart
+              data={finalData?.final_punch.filter(
+                (data1) =>
+                  moment(data1.log_date).isoWeek() === currentWeek.final_punch
+              )}
+              name="Punchlogs"
+            />
             <View style={styles.worklogsStyle}>
-              <Chart data={data.final_work} name="Worklogs" />
+              <Picker
+                selectedValue={currentWeek.final_work}
+                mode="dropdown"
+                placeholder={'Select week range'}
+                onValueChange={(itemValue) =>
+                  setCurrentWeek({
+                    ...currentWeek,
+                    final_work: itemValue,
+                  })
+                }>
+                {getWeeksInCurrentMonth()?.map((week, index) => {
+                  return (
+                    <Picker.Item
+                      key={index}
+                      label={week.title}
+                      value={week.weekNumber}
+                    />
+                  )
+                })}
+              </Picker>
+              <Chart
+                data={finalData?.final_work.filter(
+                  (data1) =>
+                    moment(data1.log_date).isoWeek() === currentWeek.final_work
+                )}
+                name="Worklogs"
+              />
             </View>
           </>
         )}

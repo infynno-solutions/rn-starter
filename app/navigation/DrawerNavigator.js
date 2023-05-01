@@ -2,7 +2,7 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer'
-import React from 'react'
+import React, {useState} from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
@@ -21,6 +21,7 @@ import {getCurrentScreen, logoutUser} from '../components/Auth/AuthActions'
 import {useNavigation, DrawerActions} from '@react-navigation/native'
 import Images from '../../assets/images'
 import Logout from '../components/Auth/Logout'
+import WorkLogBottomSheet from '../components/Dashboard/WorkLogBottomSheet'
 
 const Drawer = createDrawerNavigator()
 
@@ -65,7 +66,9 @@ function AppDrawerStack() {
   const dispatch = useDispatch()
   const {profile} = useSelector((state) => state.ProfileReducers)
   const {currentScreen} = useSelector((state) => state.AuthReducers)
+  const {activeTask} = useSelector((state) => state.TasksReducers)
 
+  const [isVisible, setIsVisible] = useState(false)
   const navigation = useNavigation()
 
   const CustomDrawerContent = (props) => {
@@ -220,7 +223,30 @@ function AppDrawerStack() {
                 </View>
               </View>
             ),
-            headerRight: () => <Logout navigation={navigation} />,
+            headerRight: () => {
+              return (
+                <>
+                  {activeTask && activeTask.start !== null ? (
+                    <Logout navigation={navigation} />
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.timerWrapper}
+                      onPress={() => {
+                        setIsVisible(true)
+                      }}>
+                      <Text style={styles.timerText}>Add Worklog</Text>
+                    </TouchableOpacity>
+                  )}
+                  {isVisible && (
+                    <WorkLogBottomSheet
+                      navigation={navigation}
+                      isVisible={isVisible}
+                      setIsVisible={() => setIsVisible(false)}
+                    />
+                  )}
+                </>
+              )
+            },
           }
         }}
       />
@@ -357,4 +383,12 @@ const styles = StyleSheet.create({
     marginRight: 20,
     tintColor: 'white',
   },
+  timerWrapper: {
+    backgroundColor: Config.accentColor,
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  timerText: {color: '#fff', fontSize: 12},
 })

@@ -120,6 +120,7 @@ function DashboardNavigator() {
                 <Icon name={'arrow-left'} size={24} color={'black'} />
               </TouchableOpacity>
             ),
+            headerTitle: 'Holidays',
             headerTitleAlign: 'center',
             animation: 'slide_from_right',
             animationTypeForReplace: 'push',
