@@ -1,20 +1,22 @@
 import axiosInterceptors from '../../api'
 import ToastMessage from '../Toast'
 
-export const fetchStats = navigation => {
-  return dispatch => {
+export const fetchStats = (navigation, params) => {
+  return (dispatch) => {
     dispatch({type: 'DASHBOARD_STATS_PENDING'})
 
     axiosInterceptors
-      .get('/dashboard')
-      .then(res => {
+      .get('/dashboard', {
+        params,
+      })
+      .then((res) => {
         if (res.success === true) {
           dispatch({type: 'DASHBOARD_STATS_SUCCESS', data: res.data})
         } else {
           dispatch({type: 'DASHBOARD_STATS_FAILURE', message: res.message})
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: 'DASHBOARD_STATS_FAILURE',
           payload: 'Something went wrong.',
@@ -26,13 +28,13 @@ export const fetchStats = navigation => {
   }
 }
 
-export const fetchPunchLogs = navigation => {
-  return async dispatch => {
+export const fetchPunchLogs = (navigation) => {
+  return async (dispatch) => {
     dispatch({type: 'FETCH_PUNCHLOGS_PENDING'})
 
     await axiosInterceptors
       .get('/punchlog')
-      .then(res => {
+      .then((res) => {
         if (res.success === true) {
           dispatch({type: 'FETCH_PUNCHLOGS_SUCCESS', data: res.data})
         } else {
@@ -40,7 +42,7 @@ export const fetchPunchLogs = navigation => {
           ToastMessage(res.message, true)
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: 'FETCH_PUNCHLOGS_FAILURE',
           payload: 'Something went wrong.',
@@ -52,13 +54,13 @@ export const fetchPunchLogs = navigation => {
   }
 }
 
-export const createPunchLog = navigation => {
-  return async dispatch => {
+export const createPunchLog = (navigation) => {
+  return async (dispatch) => {
     dispatch({type: 'CREATE_PUNCHLOGS_PENDING'})
 
     await axiosInterceptors
       .post('/punchlog')
-      .then(res => {
+      .then((res) => {
         if (res.success === true) {
           dispatch({type: 'CREATE_PUNCHLOGS_SUCCESS', data: res.data})
           ToastMessage(res.message)
@@ -68,7 +70,7 @@ export const createPunchLog = navigation => {
           ToastMessage(res.message, true)
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: 'CREATE_PUNCHLOGS_FAILURE',
           payload: 'Something went wrong.',
