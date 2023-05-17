@@ -6,6 +6,8 @@ const Images = {
   emptyProfile: require('../images/emptyProfile.webp'),
   profile: require('../images/profile.png'),
   noDataFound: require('../images/nodata.png'),
+  punchLog: require('../images/punch-log.png'),
+  overtime: require('../images/overtime.png'),
 }
 
 export default Images
