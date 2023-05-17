@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import {Config} from '../../common'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {useDispatch, useSelector} from 'react-redux'
 import {
@@ -19,7 +18,6 @@ import {
   fetchWorkLogProjects,
   fetchWorkLogs,
 } from '../Projects/ProjectsActions'
-import * as Yup from 'yup'
 import {Formik} from 'formik'
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -27,15 +25,8 @@ import {Picker} from '@react-native-picker/picker'
 import CustomTextInput from '../CustomTextInput'
 import FormatDate from '../FormatDate'
 import {HoursData, MinutesData} from '../../utills/constant'
-
-const AddWorkLogSchema = Yup.object().shape({
-  project_id: Yup.number().required('Project field is required').nullable(),
-  task_id: Yup.number().required('Task field is required').nullable(),
-  tracked_date: Yup.string().required('Date field is required'),
-  note: Yup.string().required('Please provide the note'),
-  hours: Yup.number().required('Hours field is required'),
-  minutes: Yup.number().required('Minutes field is required'),
-})
+import {AddWorkLogSchema} from '../../common/validationSchema'
+import appStyle from '../../common/appStyle'
 
 const WorkLogBottomSheet = ({navigation, isVisible, setIsVisible}) => {
   let sheetRef = useRef(null)
@@ -181,13 +172,13 @@ const WorkLogBottomSheet = ({navigation, isVisible, setIsVisible}) => {
                             <View style={styles.formInput} />
                           </>
                         )}
-                        <Text style={styles.formInputTitle}>Date of Birth</Text>
+                        <Text style={styles.formInputTitle}>Date</Text>
                         <TouchableOpacity
                           onPress={() => setIsDatePickerShow(true)}>
                           <CustomTextInput
                             editable={false}
                             placeholderTextColor="#000"
-                            placeholder="Date of Birth"
+                            placeholder="Date"
                             value={FormatDate(values.tracked_date)}
                             error={errors.tracked_date}
                             style={styles.dateTextStyle}
@@ -325,17 +316,7 @@ const WorkLogBottomSheet = ({navigation, isVisible, setIsVisible}) => {
 export default WorkLogBottomSheet
 
 const styles = StyleSheet.create({
-  formInputTitle: {
-    fontWeight: 'bold',
-    color: '#b6c0cb',
-    fontSize: 16,
-  },
-  formInput: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#e2e2e2',
-    marginBottom: 15,
-    fontWeight: 'bold',
-  },
+  ...appStyle,
   note: {
     borderColor: '#b6c0cb',
     borderWidth: 1,
@@ -348,36 +329,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     color: 'black',
-  },
-  btnStyle: {
-    backgroundColor: Config.primaryDark,
-    borderRadius: 10,
-    width: 160,
-    paddingVertical: 13,
-    paddingHorizontal: 16,
-    marginTop: 30,
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    shadowOffset: {width: 5, height: 3},
-    shadowColor: 'red',
-    shadowOpacity: 0.5,
-    elevation: 5,
-  },
-  loaderViewStyle: {
-    height: '100%',
-    justifyContent: 'center',
-  },
-  buttonViewStyle: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-evenly',
-    position: 'relative',
-    bottom: 15,
   },
   pickerView: {
     borderColor: '#b6c0cb',
@@ -395,22 +346,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 20,
   },
-  errorTextStyle: {
-    color: 'red',
-    marginTop: 5,
-    marginLeft: 5,
-  },
   dateTextStyle: {
     marginLeft: 10,
     color: 'black',
     fontWeight: '400',
-  },
-  bottomLineStyle: {
-    borderBottomWidth: 2,
-    borderBottomColor: '#e9ecef',
-    paddingHorizontal: 10,
-    width: '100%',
-    paddingVertical: 10,
   },
   headViewStyle: {
     display: 'flex',
