@@ -31,6 +31,7 @@ const Dashboard = ({navigation}) => {
     loading: state.DashboardReducers.loading,
     data: state.DashboardReducers.data,
   }))
+  const {profile} = useSelector((state) => state.ProfileReducers)
   const dispatch = useDispatch()
   const currentMonth = moment().format('MMM YYYY')
 
@@ -135,7 +136,7 @@ const Dashboard = ({navigation}) => {
         />
         {data && data.dailyUpdates && (
           <>
-            <DailyUpdate dailyUpdates={data?.dailyUpdates} />
+            <DailyUpdate dailyUpdates={data?.dailyUpdates} profile={profile} />
           </>
         )}
         {data && data.final_punch && data.final_punch && (
@@ -154,6 +155,9 @@ const Dashboard = ({navigation}) => {
               endLabel="To"
               calendarIcon={'none'}
               editIcon={'none'}
+              disableSafeTop={true}
+              animationType="fade"
+              disableStatusBar={true}
             />
 
             <Menu

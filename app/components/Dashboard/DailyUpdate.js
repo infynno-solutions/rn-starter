@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {View, Text, FlatList, StyleSheet} from 'react-native'
 import {Config} from '../../common'
 
-const DailyUpdate = ({dailyUpdates}) => {
+const DailyUpdate = ({dailyUpdates, profile}) => {
   const [dailyUpdatesData, setDailyUpdatesData] = useState([])
 
   useEffect(() => {
@@ -57,6 +57,14 @@ const DailyUpdate = ({dailyUpdates}) => {
                     />
                     {item?.project.map((project, projectIndex) => (
                       <View key={projectIndex} style={{marginTop: 10}}>
+                        <View style={styles.titleTrackedStyle}>
+                          <Text style={styles.trackedHoursStyle}>
+                            {profile?.full_name}
+                          </Text>
+                          <Text style={styles.trackedHoursStyle}>
+                            {project?.tracked_hour}
+                          </Text>
+                        </View>
                         <Text style={styles.projectNameTextStyle}>
                           {project.project_name}
                         </Text>
@@ -97,6 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginBottom: 10,
     borderRadius: 3,
+    height: 500,
   },
   titleStyle: {paddingVertical: 10, fontSize: 20, fontWeight: '800'},
   dateTextStyle: {color: '#736cc7', fontSize: 16, fontWeight: '600'},
@@ -104,8 +113,8 @@ const styles = StyleSheet.create({
   projectNoteStyle: {marginLeft: 10, color: '#617182'},
   dateViewStyle: {paddingVertical: 10, paddingLeft: 5},
   dailyUpdateContent: {
-    maxHeight: 400,
     flexDirection: 'row',
+    maxHeight: 420,
   },
   titleViewStyle: {flex: 1, marginLeft: 10},
   noDailyReportingStyle: {
@@ -119,5 +128,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     color: Config.primayColor,
+  },
+  trackedHoursStyle: {
+    fontWeight: '600',
+    fontSize: 16,
+  },
+  titleTrackedStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '95%',
+    marginBottom: 10,
   },
 })

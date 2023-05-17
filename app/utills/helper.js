@@ -1,36 +1,36 @@
 import moment from 'moment'
 
-export const getWeeksOfMonth = () => {
-  const currentMonth1 = moment().month()
-  const weeks = []
-
-  let currentDate = moment().startOf('month').day('Monday')
-  if (currentDate.month() !== currentMonth1) {
-    currentDate.add(1, 'week')
-  }
-
-  while (currentDate.month() === currentMonth1) {
-    weeks.push({
-      title: `${currentDate.format('MMM D')} - ${currentDate
-        .clone()
-        .endOf('week')
-        .add(1, 'day')
-        .format('MMM D')}`,
-      weekNumber: currentDate.isoWeek(),
+export function getAllMonth() {
+  const months = []
+  for (let i = 1; i <= 12; i++) {
+    const month = moment().month(i - 1)
+    months.push({
+      value: month.format('MM'),
+      month: month.format('MMM'),
     })
-    currentDate.add(1, 'week')
   }
-  return weeks
+  return months
 }
 
-export function getWeeksInCurrentMonth() {
-  const currentMonth2 = moment().month()
+export function getYears() {
+  const years = []
+  const dateStart = moment().subtract(4, 'y')
+  const dateEnd = moment().add(10, 'y')
+  while (dateEnd.diff(dateStart, 'years') >= 0) {
+    years.push(dateStart.format('YYYY'))
+    dateStart.add(1, 'year')
+  }
+  return years
+}
+
+export function getWeeksInCurrentMonth(week) {
+  const currentMonth = moment().isoWeek(week).month()
   const firstDayOfMonth = moment()
-    .month(currentMonth2)
+    .month(currentMonth)
     .startOf('month')
     .isoWeekday(1)
   const lastDayOfMonth = moment()
-    .month(currentMonth2)
+    .month(currentMonth)
     .endOf('month')
     .isoWeekday(7)
   const weeks = []
@@ -49,3 +49,36 @@ export function getWeeksInCurrentMonth() {
   }
   return weeks
 }
+
+export const datePickerData = [
+  {
+    title: 'Current week',
+    id: 1,
+    value: {
+      start_date: moment().startOf('isoWeek').format('DD-MM-YYYY'),
+      end_date: moment().endOf('isoWeek').format('DD-MM-YYYY'),
+    },
+  },
+  {
+    title: 'Current Month',
+    id: 2,
+    value: {
+      start_date: moment().startOf('month').format('DD-MM-YYYY'),
+      end_date: moment().endOf('month').format('DD-MM-YYYY'),
+    },
+  },
+  {
+    title: 'Last Month',
+    id: 3,
+    value: {
+      start_date: moment()
+        .subtract(1, 'month')
+        .startOf('month')
+        .format('DD-MM-YYYY'),
+      end_date: moment()
+        .subtract(1, 'month')
+        .endOf('month')
+        .format('DD-MM-YYYY'),
+    },
+  },
+]
