@@ -14,6 +14,8 @@ import EditLeave from '../components/Leaves/EditLeave'
 import InterviewFeedback from '../components/Interviews/InterviewFeedback'
 import InterviewScreen from '../components/Interviews/InterviewScreen'
 import Logout from '../components/Auth/Logout'
+import PunchLog from '../components/PunchLog/PunchLog'
+import OverTime from '../components/OverTime/OverTime'
 
 const Stack = createNativeStackNavigator()
 
@@ -74,6 +76,26 @@ function DashboardNavigator() {
         options={() => {
           return {
             headerShown: false,
+          }
+        }}
+      />
+      <Stack.Screen
+        name="PunchLog"
+        component={PunchLog}
+        options={() => {
+          return {
+            headerShown: true,
+            headerTitle: 'Punch Logs',
+          }
+        }}
+      />
+      <Stack.Screen
+        name="OverTime"
+        component={OverTime}
+        options={() => {
+          return {
+            headerShown: true,
+            headerTitle: 'OverTime',
           }
         }}
       />

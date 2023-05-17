@@ -64,6 +64,9 @@ const DrawerItem = (props) => {
 
 function AppDrawerStack() {
   const dispatch = useDispatch()
+
+  const [subMenuExpand, setSubMenuExpand] = useState(false)
+
   const {profile} = useSelector((state) => state.ProfileReducers)
   const {currentScreen} = useSelector((state) => state.AuthReducers)
   const {activeTask} = useSelector((state) => state.TasksReducers)
@@ -162,6 +165,44 @@ function AppDrawerStack() {
               images={true}
               currentScreen={currentScreen === 'Policies'}
             />
+            <DrawerItem
+              Title="Punch Logs"
+              onPress={() => {
+                screenOnPress('PunchLog')
+                navigation.dispatch(DrawerActions.closeDrawer())
+              }}
+              iconName={Images.punchLog}
+              images={true}
+              currentScreen={currentScreen === 'PunchLog'}
+            />
+            <TouchableOpacity
+              onPress={() => setSubMenuExpand(!subMenuExpand)}
+              style={(styles.navItem, styles.drawerNavItemStyle)}>
+              <View style={[styles.drawerItemView]}>
+                <View style={{width: 30}}>
+                  <Icon
+                    name={subMenuExpand ? 'chevron-up' : 'chevron-down'}
+                    size={32}
+                    color="#333"
+                  />
+                </View>
+                <Text style={[styles.navTitle]}>{'Reports'}</Text>
+              </View>
+            </TouchableOpacity>
+            {subMenuExpand && (
+              <View style={{marginLeft: 20}}>
+                <DrawerItem
+                  Title="OverTime"
+                  onPress={() => {
+                    screenOnPress('OverTime')
+                    navigation.dispatch(DrawerActions.closeDrawer())
+                  }}
+                  iconName={Images.overtime}
+                  images={true}
+                  currentScreen={currentScreen === 'OverTime'}
+                />
+              </View>
+            )}
           </View>
         </DrawerContentScrollView>
         <View style={{paddingHorizontal: 20}}>
@@ -344,7 +385,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
   },
-  drawerNavItemStyle: {paddingHorizontal: 20, paddingVertical: 5},
+  drawerNavItemStyle: {paddingHorizontal: 20, paddingVertical: 2},
   drawerViewStyle: {
     paddingHorizontal: 10,
     paddingTop: 8,
