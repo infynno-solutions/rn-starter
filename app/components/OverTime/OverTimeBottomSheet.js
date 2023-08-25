@@ -166,15 +166,24 @@ const OverTimeBottomSheet = ({
                                 )
                               }
                             }}>
-                            {[
-                              {id: 0, name: 'Please select an option'},
-                              ...worklogs?.userProjects,
-                            ]?.map((project) => {
+                            <Picker.Item
+                              label={'Select Project'}
+                              value={Number(0)}
+                              style={{color: '#80808066'}}
+                            />
+                            {worklogs?.userProjects.map((project) => {
                               return (
                                 <Picker.Item
                                   key={project.id}
                                   label={project.name}
                                   value={Number(project.id)}
+                                  style={
+                                    values.project_id === project.id
+                                      ? {
+                                          color: '#000000',
+                                        }
+                                      : {color: '#000000B3'}
+                                  }
                                 />
                               )
                             })}
@@ -203,12 +212,24 @@ const OverTimeBottomSheet = ({
                                   setFieldValue('task_id', itemValue)
                                 }
                               }}>
+                              <Picker.Item
+                                label={'Select Task'}
+                                value={Number(0)}
+                                style={{color: '#80808066'}}
+                              />
                               {projectTasks?.map?.((project) => {
                                 return (
                                   <Picker.Item
                                     key={Number(project.id)}
                                     label={project.title}
                                     value={Number(project.id)}
+                                    style={
+                                      values.task_id === project.id
+                                        ? {
+                                            color: '#000000',
+                                          }
+                                        : {color: '#000000B3'}
+                                    }
                                   />
                                 )
                               })}
@@ -400,12 +421,24 @@ const OverTimeBottomSheet = ({
                                 setFieldValue('request_to', itemValue)
                               }
                             }}>
+                            <Picker.Item
+                              label={'Select User'}
+                              value={Number(0)}
+                              style={{color: '#80808066'}}
+                            />
                             {requestUser?.map((user) => {
                               return (
                                 <Picker.Item
                                   key={Number(user.id)}
                                   label={user.full_name}
                                   value={Number(user.id)}
+                                  style={
+                                    values.request_to === user.id
+                                      ? {
+                                          color: '#000000',
+                                        }
+                                      : {color: '#000000B3'}
+                                  }
                                 />
                               )
                             })}

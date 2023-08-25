@@ -100,10 +100,7 @@ export default function ProjectsReducers(state = initialState, action) {
         ...state,
         isError: false,
         worklogsTaskLoading: false,
-        projectTasks: [
-          {id: 0, title: 'Please select an option'},
-          ...action.payload,
-        ],
+        projectTasks: action.payload,
       }
     case 'FETCH_PROJECTS_TASKS_FAILURE':
       return {
@@ -148,10 +145,7 @@ export default function ProjectsReducers(state = initialState, action) {
         ...state,
         isError: false,
         worklogsTaskLoading: false,
-        requestUser: [
-          {id: 0, full_name: 'Please select an option'},
-          ...action.payload,
-        ],
+        requestUser: action.payload,
       }
     case 'GET_PUNCH_LOG_LIST_PENDING':
       return {

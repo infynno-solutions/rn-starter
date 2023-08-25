@@ -132,16 +132,25 @@ const OverTime = ({navigation}) => {
                   projectId: itemValue,
                 })
               }}>
+              <Picker.Item
+                label={'Project Select'}
+                value={Number(0)}
+                style={{color: '#80808066'}}
+              />
               {projects?.projects.length > 0 &&
-                [
-                  {project_id: 0, name: 'Please select an option'},
-                  ...projects?.projects,
-                ].map((project) => {
+                projects?.projects.map((project) => {
                   return (
                     <Picker.Item
                       key={project.project_id}
                       label={project.name}
                       value={Number(project.project_id)}
+                      style={
+                        filter.projectId === project.id
+                          ? {
+                              color: '#000000',
+                            }
+                          : {color: '#000000B3'}
+                      }
                     />
                   )
                 })}
@@ -152,7 +161,7 @@ const OverTime = ({navigation}) => {
           {extraLogList && !extraLogList?.loading ? (
             <View>
               <FlatList
-                style={{height: '75%'}}
+                style={{height: '72%'}}
                 data={extraLogList?.data?.extraWorkLogs || []}
                 keyExtractor={(_, index) => String(index)}
                 numColumns={1}

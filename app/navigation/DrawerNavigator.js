@@ -22,6 +22,7 @@ import {useNavigation, DrawerActions} from '@react-navigation/native'
 import Images from '../../assets/images'
 import Logout from '../components/Auth/Logout'
 import WorkLogBottomSheet from '../components/Dashboard/WorkLogBottomSheet'
+import moment from 'moment'
 
 const Drawer = createDrawerNavigator()
 
@@ -71,8 +72,18 @@ function AppDrawerStack() {
   const {currentScreen} = useSelector((state) => state.AuthReducers)
   const {activeTask} = useSelector((state) => state.TasksReducers)
 
+  const {worklogs} = useSelector((state) => state.ProjectsReducers)
   const [isVisible, setIsVisible] = useState(false)
   const navigation = useNavigation()
+
+  const initialValues = {
+    project_id: worklogs?.latestTrackerProject?.projectId ?? null,
+    task_id: worklogs?.latestTrackerTask?.tasksId ?? null,
+    tracked_date: moment(),
+    note: '',
+    hours: 8,
+    minutes: 0,
+  }
 
   const CustomDrawerContent = (props) => {
     const screenOnPress = (screenName, title) => {
@@ -282,6 +293,7 @@ function AppDrawerStack() {
                     <WorkLogBottomSheet
                       navigation={navigation}
                       isVisible={isVisible}
+                      initialValues={initialValues}
                       setIsVisible={() => setIsVisible(false)}
                     />
                   )}

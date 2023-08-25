@@ -27,8 +27,14 @@ import FormatDate from '../FormatDate'
 import {HoursData, MinutesData} from '../../utills/constant'
 import {AddWorkLogSchema} from '../../common/validationSchema'
 import appStyle from '../../common/appStyle'
+import {fetchStats} from './DashboardActions'
 
-const WorkLogBottomSheet = ({navigation, isVisible, setIsVisible}) => {
+const WorkLogBottomSheet = ({
+  navigation,
+  isVisible,
+  initialValues,
+  setIsVisible,
+}) => {
   let sheetRef = useRef(null)
 
   const [isDatePickerShow, setIsDatePickerShow] = useState(false)
@@ -72,14 +78,8 @@ const WorkLogBottomSheet = ({navigation, isVisible, setIsVisible}) => {
         onClose={setIsVisible}>
         <SafeAreaView>
           <Formik
-            initialValues={{
-              project_id: worklogs?.latestTrackerProject?.projectId ?? null,
-              task_id: worklogs?.latestTrackerTask?.tasksId ?? null,
-              tracked_date: moment(),
-              note: '',
-              hours: 8,
-              minutes: 0,
-            }}
+            initialValues={initialValues}
+            enableReinitialize
             validationSchema={AddWorkLogSchema}
             onSubmit={async (values) => {
               const payload = {
@@ -89,6 +89,14 @@ const WorkLogBottomSheet = ({navigation, isVisible, setIsVisible}) => {
               dispatch(addWorklogStore(payload))
                 .then((res) => {
                   setIsVisible()
+                  dispatch(
+                    fetchStats(navigation, {
+                      start_date: moment()
+                        .startOf('isoWeek')
+                        .format('DD-MM-YYYY'),
+                      end_date: moment().endOf('isoWeek').format('DD-MM-YYYY'),
+                    })
+                  )
                 })
                 .catch((error) => {
                   console.log('error', error)
@@ -189,6 +197,7 @@ const WorkLogBottomSheet = ({navigation, isVisible, setIsVisible}) => {
                             value={new Date(values.tracked_date)}
                             mode="date"
                             display="calendar"
+                            maximumDate={new Date()}
                             onChange={(event, date) => {
                               if (event.type !== 'dismissed') {
                                 setIsDatePickerShow(false)
