@@ -1,116 +1,79 @@
-# rn-starter
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Steps to setup environment
+# Getting Started
 
-```sh
-Node module install
-# yarn
-Project Run
-# yarn run start (yarn react-native start)
+>**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-Android environment
+## Step 1: Start the Metro Server
 
-# yarn run android OR npx react-native run-android
-IOS environment
-# yarn run ios OR npx react-native run-ios
+First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+
+To start Metro, run the following command from the _root_ of your React Native project:
+
+```bash
+# using npm
+npm start
+
+# OR using Yarn
+yarn start
 ```
 
-## Folder structure
+## Step 2: Start your Application
 
-This boilerplate follows a very simple project structure:
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
-- src
-  - store
-    - actions
-    - reducers
-  - screens
-  - navigation
-  - global
-  - components
-  - styles
-  - utils
-  - Apis
-  - hooks
+### For Android
 
-## Ignoring More Files
+```bash
+# using npm
+npm run android
 
-For your source control, you'll want to start ignoring the .jest folder. If you're using git, we can just add entries to our .gitignore file.
-
-```sh
-# Jest
-#
-.jest/
+# OR using Yarn
+yarn android
 ```
 
-As a checkpoint, consider committing your files into version control.
+### For iOS
 
-```sh
-git init
-git add .gitignore # import to do this first, to ignore our files
-git add .
-git commit -am "Initial commit."
+```bash
+# using npm
+npm run ios
+
+# OR using Yarn
+yarn ios
 ```
 
-## Code Pattern and Formatting to follow
+If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-1. Naming Conventions
+This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-- Use pascal case for naming file and folders
-- Include all the control in a single import belong to same module end with semicolon. There should be no space between two imports. (ex. import {ScrollView, View, TouchableOpacity, KeyboardAvoidingView, ListView, AsyncStorage, Alert } from ‘react-native’;)
+## Step 3: Modifying your App
 
-2. Structuring Folders
+Now that you have successfully run the app, let's modify it.
 
-- All the components, globals, images, redux etc.. Should be written inside the app folder
-- All the components except global components should be written inside the components folder under an app folder.
-- A style for every page is written in its corresponding folder. Below, we can see the example of about screen
-- All the global components, global styles, golbal data etc .. should be written in the globals folder under an app folder
-- Global functions for API requests should be written in the request folder under the app folder
-- If using redux, then the redux files should be written inside the store folder under the app folder
+1. Open `App.tsx` in your text editor of choice and edit some lines.
+2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
-3. Putting Import Orders
+   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-- React import
-- Library imports (Alphabetical order)
-- Absolute imports from the project (Alphabetical order)
-- Relative imports (Alphabetical order)
-- Import \* as
+## Congratulations! :tada:
 
-4. Variables Naming
+You've successfully run and modified your React Native App. :partying_face:
 
-- let const var declarations should be camelcase
-- use proper naming of variables
+### Now what?
 
-  5.Functional compnent or class compnent Structure
-  Component declaration
-  {
-  Hook declarations
-  State declarations
-  //comment of function with use case, date,name
-  functions(){
-  }
-  return(){
-  }
-  }
+- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
 
-6. Other points to use while coding
+# Troubleshooting
 
-- Do not use inline Styles
-- Do not use inline functions
-- Maintain Consistency
-- Keep code length as low as possible
-- Use custom components
-- Use minimal third party libraries
-- Use proper naming of variables, functions, classes etc…
+If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
-## Extensions for TypeScript, JavaScript in React native
+# Learn More
 
-- Eslint
-- Prettier
-- React Native Snippets
-- ES7+ React/Redux/React-Native snippets
-- Gitlens
-- Stylelint
-- Auto Close Tag
-- Auto Rename Tag
-- Color Highlight
-- Auto Import
+To learn more about React Native, take a look at the following resources:
+
+- [React Native Website](https://reactnative.dev) - learn more about React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
