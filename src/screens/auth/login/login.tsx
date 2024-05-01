@@ -9,15 +9,23 @@ import {
   Text,
   View,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import {styles} from './login.styles';
 import String from '../../../constants/string';
 import {LoginValuesType} from '../../../types/AuthTypes';
 import {LoginScreenProps} from '../../../types/CommonTypes';
 import {loginSchema} from '../../../validation/Validation';
+import {signInUsingEmailPassword} from '../../../services/firebase';
+import colors from '../../../constants/color';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginUser} from '../../../store/auth/authSlice';
+import {AppDispatch, RootState} from '../../../../App';
 
 const LoginScreen: FC<LoginScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);
+  const loading = useSelector((state: RootState) => state.auth.isFetching);
+  const dispatch = useDispatch<AppDispatch>();
   const initialValues: LoginValuesType = {
     email: '',
     password: '',
@@ -28,8 +36,8 @@ const LoginScreen: FC<LoginScreenProps> = props => {
       <Formik
         initialValues={initialValues}
         validationSchema={loginSchema}
-        onSubmit={values => {
-          console.log(values);
+        onSubmit={async values => {
+          dispatch(loginUser(values));
         }}>
         {({
           values,
@@ -102,7 +110,11 @@ const LoginScreen: FC<LoginScreenProps> = props => {
                   <TouchableOpacity
                     style={styles.btnBlack}
                     onPress={handleSubmit}>
-                    <Text style={styles.btnText}>Login</Text>
+                    {loading ? (
+                      <ActivityIndicator size={'small'} color={colors.black} />
+                    ) : (
+                      <Text style={styles.btnText}>Login</Text>
+                    )}
                   </TouchableOpacity>
                   <Text style={styles.signupTextBtn}>
                     Don't have an account yet?{'\n'}

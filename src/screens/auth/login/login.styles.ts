@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
       fontSize: Responsive.getWidth(13),
     },
     inputText2: {
-      flex: 1,
+      flex: 1,color:colors.black,
       height: Responsive.getWidth(45),
       fontSize: Responsive.getWidth(16),
       paddingLeft: Responsive.getWidth(10),
@@ -18,17 +18,18 @@ export const styles = StyleSheet.create({
       height: Responsive.getWidth(45),
       fontSize: Responsive.getWidth(16),
       borderBottomColor: colors.border,
+      color:colors.black,
       borderBottomWidth: 1,
     },
-    loginTitle: {
+    loginTitle: {color:colors.black,
       fontSize: Responsive.getWidth(34),
       marginTop: Responsive.getWidth(35),
       marginBottom: Responsive.getWidth(15),
     },
-    signupTextBtn2: {
+    signupTextBtn2: {color:colors.black,
       textDecorationLine: 'underline',
     },
-    signupTextBtn: {
+    signupTextBtn: {color:colors.black,
       textAlign: 'center',
       marginTop: Responsive.getWidth(20),
       fontSize: Responsive.getWidth(14),

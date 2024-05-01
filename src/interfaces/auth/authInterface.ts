@@ -1,3 +1,4 @@
+
 interface RedirectLoginState {
     isLoading: boolean;
     data: any;
@@ -17,13 +18,13 @@ interface AuthState {
   }
 
   interface RegisterUserParams{
-    firstName:string;
      email:string;
-      confirmEmail:string;
-       website:string;
+     password:string;
+     onSuccess?:()=>void;
   }
 
   interface LoginUserParams{
     email:string;
     password:string;
   }
+

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612839212647",
+    "project_id": "react-native-boilerplate-87570",
+    "storage_bucket": "react-native-boilerplate-87570.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612839212647:android:1463ea748a69c8994bf6c2",
+        "android_client_info": {
+          "package_name": "com.reactnativestarter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBla_O7SLOmmwlRYqNt2oYOnKAcayIuhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

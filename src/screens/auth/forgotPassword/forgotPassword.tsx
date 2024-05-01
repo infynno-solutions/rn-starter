@@ -28,9 +28,7 @@ const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
       <Formik
         initialValues={initialValues}
         validationSchema={loginSchema}
-        onSubmit={values => {
-          console.log(values);
-        }}>
+        onSubmit={values => {}}>
         {({
           values,
           touched,
@@ -48,9 +46,7 @@ const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
                 contentContainerStyle={styles.ScrollView}
                 keyboardShouldPersistTaps="handled">
                 <View style={styles.content}>
-                  <Text style={styles.loginTitle}>
-                    Forgot {'\n'}Password
-                  </Text>
+                  <Text style={styles.loginTitle}>Forgot {'\n'}Password</Text>
                   <View style={styles.inputView}>
                     <View style={styles.inputGroup}>
                       <TextInput
@@ -72,14 +68,12 @@ const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
                       <Text style={styles.errorMsg}>{errors.email}</Text>
                     )}
                   </View>
-                 <View style={{height:10}}/>
-              
+
                   <TouchableOpacity
                     style={styles.btnBlack}
                     onPress={handleSubmit}>
                     <Text style={styles.btnText}>Submit</Text>
                   </TouchableOpacity>
-                 
                 </View>
               </ScrollView>
             </KeyboardAvoidingView>

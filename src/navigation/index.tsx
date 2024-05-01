@@ -11,10 +11,8 @@ import appStyle from '../styles/appStyle';
 
 const Navigation = () => {
   const [isPreloading, setIsPreloading] = useState<boolean>(true);
-  const isUserLogin = useSelector(
-    (state: ApplicationState) => state.auth.isSuccess,
-  );
-
+  const user = useSelector((state: ApplicationState) => state.auth.userData);
+  const isUserLogin = user?.user;
   useEffect(() => {
     setTimeout(() => setIsPreloading(false), 3000);
   }, []);

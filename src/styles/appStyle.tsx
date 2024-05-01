@@ -64,26 +64,27 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  btnText: {
+  btnText: {color:colors.black,
     fontSize: Responsive.getWidth(14),
     textAlign: 'center',
     textTransform: 'uppercase',
   },
   btnBlack: {
-    width: '100%',
+    width: '100%',color:colors.black,
     borderRadius: Responsive.getWidth(10),
     height: Responsive.getWidth(48),
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: 'black',
     borderWidth: 1,
+    marginTop:10,
   },
   forgotPassBtn: {
     alignSelf: 'center',
     marginTop: Responsive.getWidth(10),
     marginBottom: Responsive.getWidth(10),
   },
-  forgotPassBtnText: {
+  forgotPassBtnText: {color:colors.black,
     fontSize: Responsive.getWidth(14),
   },
   inputGroup: {
