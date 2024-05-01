@@ -34,4 +34,5 @@ export const styles = StyleSheet.create({
       fontSize: Responsive.getWidth(14),
       lineHeight: Responsive.getWidth(22),
     },
+    
 })

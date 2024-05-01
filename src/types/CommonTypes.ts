@@ -1,3 +1,4 @@
+import { ForgotPasswordScreenProps } from './CommonTypes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import store from '../store/store';
 
