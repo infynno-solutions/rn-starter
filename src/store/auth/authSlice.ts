@@ -63,7 +63,7 @@ export const loginUser = createAsyncThunk(
       const device = `${brand || ''} ${model || ''}, ${os || ''} ${
         version || ''
       }`;
-      const response = await axios.post(`/login`, {
+      const response = await axiosInterceptors.post(`/login`, {
         email,
         password,
         from_app: true,

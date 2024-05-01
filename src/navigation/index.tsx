@@ -3,9 +3,9 @@ import {View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
-import DashboardNavigator from './dashboardNavigator';
-import AuthNavigator from './authNavigator';
-import {ApplicationState} from '../types/commonTypes';
+import DashboardNavigator from './DashboardNavigator';
+import AuthNavigator from './AuthNavigator';
+import {ApplicationState} from '../types/CommonTypes';
 import SplashScreen from '../screens/splashScreen/splashScreen';
 import appStyle from '../styles/appStyle';
 

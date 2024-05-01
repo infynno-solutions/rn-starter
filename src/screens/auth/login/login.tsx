@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import {styles} from './login.styles';
 import String from '../../../constants/string';
-import {LoginValuesType} from '../../../types/authTypes';
-import {LoginScreenProps} from '../../../types/commonTypes';
-import {loginSchema} from '../../../validation/validation';
+import {LoginValuesType} from '../../../types/AuthTypes';
+import {LoginScreenProps} from '../../../types/CommonTypes';
+import {loginSchema} from '../../../validation/Validation';
 
 const LoginScreen: FC<LoginScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);

@@ -5,7 +5,7 @@ import colors from "../../../constants/color";
 export const styles = StyleSheet.create({
     ...appStyle,
     errorMsg: {
-      color: '#FF3242',
+      color: '#FF3242',paddingVertical:10,
       fontSize: Responsive.getWidth(13),
     },
     inputText2: {
