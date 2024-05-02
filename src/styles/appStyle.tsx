@@ -30,6 +30,7 @@ export default StyleSheet.create({
   SafeAreaViewStyle: {
     flex: 1,
   },
+  rowContainer: {flexDirection: 'row', alignItems: 'center'},
   KeyboardAvoidingView: {
     flex: 1,
   },
@@ -64,35 +65,39 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  btnText: {color:colors.black,
+  btnText: {
+    color: colors.black,
     fontSize: Responsive.getWidth(14),
     textAlign: 'center',
     textTransform: 'uppercase',
   },
   btnBlack: {
-    width: '100%',color:colors.black,
+    width: '100%',
+    color: colors.black,
     borderRadius: Responsive.getWidth(10),
     height: Responsive.getWidth(48),
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: 'black',
     borderWidth: 1,
-    marginTop:10,
+    marginTop: 10,
   },
   forgotPassBtn: {
     alignSelf: 'center',
     marginTop: Responsive.getWidth(10),
     marginBottom: Responsive.getWidth(10),
   },
-  forgotPassBtnText: {color:colors.black,
-    fontSize: Responsive.getWidth(14),
-  },
+  forgotPassBtnText: {color: colors.black, fontSize: Responsive.getWidth(14)},
   inputGroup: {
     position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomColor: 'black',
     borderBottomWidth: 1,
+  },
+  emptyTextStyle: {
+    color: colors.black,
+    fontSize: Responsive.getWidth(14),
   },
 });
 

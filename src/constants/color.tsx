@@ -1,5 +1,5 @@
 const colors = {
-  transparent: 'rgba(0,0,0,0)',
+  transparent: 'transparent',
   white: '#ffffff',
   black: '#000000',
   skyBlue: '#14C8CC',
