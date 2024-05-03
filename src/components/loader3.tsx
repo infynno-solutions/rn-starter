@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import {Animated, Easing, StyleSheet, View} from 'react-native';
 
-const random = () => parseInt(Math.random() * 255);
+const random = () => Number(Math.random() * 255);
 const randomColor = () =>
   'rgb(' + random() + ',' + random() + ',' + random() + ')';
 const size = 60;
 const innerSize = size / 3;
 
 export default class Loader3 extends Component {
-  constructor(props) {
+  color1: string;
+  color2: string;
+  color3: string;
+  color4: string;
+  color5: string;
+  animation: Animated.Value;
+  constructor(props: any) {
     super(props);
     this.state = {};
     this.color1 = randomColor();

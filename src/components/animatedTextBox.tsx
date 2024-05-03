@@ -7,6 +7,7 @@ import {
   TextInputProps,
   View,
 } from 'react-native';
+import colors from '../constants/color';
 
 export default function AnimatedInput({
   value,
@@ -16,7 +17,7 @@ export default function AnimatedInput({
   ...props
 }: TextInputProps) {
   const [inputHeight, setHeight] = useState(45);
-  const [placeholderWidth, setWidth] = useState(null);
+  const [placeholderWidth, setWidth] = useState(0);
   const animation = useRef(new Animated.Value(0)).current;
   const translateY = animation.interpolate({
     inputRange: [0, 1],
@@ -32,7 +33,7 @@ export default function AnimatedInput({
   });
   const onFocus = () => animate(1);
   const onBlur = () => !value && animate(0);
-  const animate = val => {
+  const animate = (val: any) => {
     Animated.spring(animation, {
       toValue: val,
       bounciness: 0,
@@ -76,8 +77,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#999',
-    marginBottom: 25,
+    borderColor: colors.border,
+    marginBottom: 10,
     marginHorizontal: 10,
   },
   input: {height: 45, paddingHorizontal: 10, fontSize: 18},

@@ -1,7 +1,7 @@
 import { BottomSheetModalRef } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModalProvider/types";
 import { BottomSheetMethods, BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { ReactElement, RefObject } from "react";
-import { ImageSourcePropType, ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { ImageSourcePropType, ImageStyle, TextStyle, ViewProps, ViewStyle } from "react-native";
 
 export interface ButtonProps {
     onPress?:()=>void;
@@ -136,4 +136,40 @@ export interface OnBoardingPageProps{
 
 export interface TileScrollingProps{
   data:any[];
+}
+
+export interface IconButtonProps{
+  renderIcon:React.FC;
+   customStyle:ViewStyle;
+    disabled:boolean;
+     onPress:()=>void;
+}
+
+export interface IconContentCardProps{
+  title:string;
+  icon:React.FC;
+  subtitle:string;
+  customLabelStyle:TextStyle
+}
+
+export interface InputTextProps{
+  label?:string;
+  passwordText?:string;
+  brColor?:string;
+  customStyles?:any
+  customLabelStyle?:TextStyle;
+  placeHolder?:string;
+  type?:string;
+}
+
+export interface InViewPortProps extends ViewProps {
+  disabled?: boolean;
+  delay?: number;
+  onChange: (isVisible: boolean) => void;
+}
+
+export interface InViewPortState {
+  rectTop: number;
+  rectBottom: number;
+  rectWidth: number;
 }

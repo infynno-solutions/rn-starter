@@ -103,6 +103,27 @@ export default StyleSheet.create({
     color: colors.black,
     fontSize: Responsive.getWidth(14),
   },
+  smallText: {
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontSize: 14,
+    lineHeight: 20,
+    color: colors.black,
+  },
+  bodyText: {
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontSize: 16,
+    lineHeight: 24,
+    color: colors.black,
+  },
+  supportingText: {
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontSize: 12,
+    lineHeight: 20,
+    color: colors.black,
+  },
 });
 
 export {widthPercentageToDP as wp, heightPercentageToDP as hp};

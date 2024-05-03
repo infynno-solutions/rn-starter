@@ -28,6 +28,8 @@ import AnimatedTileScrolling from '../../components/AnimatedTileScrolling';
 import AnimatedInput from '../../components/animatedTextBox';
 import Loader2 from '../../components/loader';
 import Loader3 from '../../components/loader3';
+import InputText from '../../components/inputText';
+import colors from '../../constants/color';
 
 let persistor = persistStore(store);
 
@@ -37,6 +39,8 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
   const modalRef = useRef<ModalRefProps>(null);
   const [selectedValue, setDropdown] = useState<DropdownValueProps>();
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <View style={appStyle.container}>
       <Header
@@ -74,6 +78,16 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
           <Loader3 />
         </View>
         <AnimatedInput value={name} onChangeText={setName} placeholder="Name" />
+
+        <InputText
+          label={'Password'}
+          textContentType="oneTimeCode"
+          value={password}
+          onChangeText={setPassword}
+          type={'Password'}
+          brColor={colors.border}
+        />
+
         <Button
           title="BottomSheetComponent"
           onPress={() => {

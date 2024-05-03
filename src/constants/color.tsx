@@ -4,7 +4,7 @@ const colors = {
   black: '#000000',
   skyBlue: '#14C8CC',
   blue: '#1D7EF0',
-  border: '#EAEAEA',
+  border: '#b3b3b3',
   green: '#379587',
   label: '#828282',
   navy: '#15182C',
