@@ -1,14 +1,23 @@
 import * as React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {AvatarProps} from '../interfaces/componentsInterface/componentInterfaces';
+import colors from '../constants/color';
 
-const Avatar = ({source, extContainerStyles, extImageStyle}: AvatarProps) => {
+const Avatar = ({
+  source,
+  extContainerStyles,
+  extImageStyle,
+  onPress,
+}: AvatarProps) => {
   return (
-    <View style={[styles.container, extContainerStyles]}>
+    <TouchableOpacity
+      onPress={() => onPress && onPress()}
+      style={[styles.container, extContainerStyles]}>
       <Image
+        resizeMode="contain"
         style={[styles.imageSourceStyle, extImageStyle]}
         source={source}></Image>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -16,14 +25,17 @@ export default Avatar;
 
 const styles = StyleSheet.create({
   container: {
-    width: 32,
-    height: 32,
+    width: 35,
+    height: 35,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   imageSourceStyle: {
-    width: 32,
-    height: 32,
+    width: 30,
+    height: 30,
+    borderRadius: 100,
   },
 });

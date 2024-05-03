@@ -8,6 +8,8 @@ import BottomSheet, {
 import {useReducedMotion} from 'react-native-reanimated';
 import colors from '../constants/color';
 import {BottomSheetComponentProps} from '../interfaces/componentsInterface/componentInterfaces';
+import appStyle from '../styles/appStyle';
+import {View} from 'react-native';
 
 const BottomSheetComponent = ({
   bottomSheetModalRef,
@@ -58,7 +60,7 @@ const BottomSheetComponent = ({
           pressBehavior={disableCloseOnOutsideClick ? 'none' : 'close'}
         />
       )}>
-      {children}
+      <View style={appStyle.container}>{children}</View>
     </BottomSheetModal>
   );
 };

@@ -18,8 +18,8 @@ export default memo(Badge);
 export const styles = StyleSheet.create({
   badgeContainer: {
     position: 'absolute',
-    top: -8,
-    right: -5,
+    top: 2,
+    right: 2,
     backgroundColor: colors.black,
     color: colors.white,
   },

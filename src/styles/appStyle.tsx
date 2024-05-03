@@ -99,6 +99,10 @@ export default StyleSheet.create({
     color: colors.black,
     fontSize: Responsive.getWidth(14),
   },
+  textHeaderStyle: {
+    color: colors.black,
+    fontSize: Responsive.getWidth(14),
+  },
 });
 
 export {widthPercentageToDP as wp, heightPercentageToDP as hp};

@@ -32,7 +32,7 @@ const Button = ({
       style={[
         styles.buttonContainer,
         {
-          width: buttonWidth ? buttonWidth : '100%',
+          width: buttonWidth ? buttonWidth : '95%',
           height: buttonHeight ? buttonHeight : 48,
           backgroundColor: outlined ? colors.transparent : colors.black,
           borderColor: borderColor ? borderColor : colors.black,

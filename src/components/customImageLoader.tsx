@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Animated} from 'react-native';
 import {Easing} from 'react-native-reanimated';
 import {CustomImageLoaderProps} from '../interfaces/componentsInterface/componentInterfaces';
+import Icons from './vectorIconSet';
+import colors from '../constants/color';
 
 const CustomImageLoader = ({isLoading, children}: CustomImageLoaderProps) => {
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
@@ -11,7 +13,7 @@ const CustomImageLoader = ({isLoading, children}: CustomImageLoaderProps) => {
       Animated.timing(rotateAnimation, {
         toValue: 1,
         easing: Easing.linear,
-        duration: 3000,
+        duration: 2000,
         useNativeDriver: true,
       }),
     ).start();
@@ -22,7 +24,7 @@ const CustomImageLoader = ({isLoading, children}: CustomImageLoaderProps) => {
       Animated.timing(rotateAnimation, {
         toValue: 1,
         easing: Easing.linear,
-        duration: 3000,
+        duration: 1000,
         useNativeDriver: true,
       }),
     ).stop();
@@ -49,7 +51,11 @@ const CustomImageLoader = ({isLoading, children}: CustomImageLoaderProps) => {
   };
   return (
     <View style={styles.container}>
-      <Animated.View style={animatedStyle}>{children}</Animated.View>
+      <Animated.View style={animatedStyle}>
+        {children || (
+          <Icons.FontAwesome6 name="spinner" size={30} color={colors.black} />
+        )}
+      </Animated.View>
     </View>
   );
 };
@@ -58,7 +64,8 @@ export default CustomImageLoader;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    padding: 20,
+    width: '35%',
     alignItems: 'center',
     justifyContent: 'center',
   },

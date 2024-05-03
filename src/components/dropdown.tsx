@@ -7,12 +7,13 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import BottomSheetComponent from './BottomSheetComponent';
 import colors from '../constants/color';
 import {showToast_info} from '../utils/helper';
 import appStyle from '../styles/appStyle';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {DropdownProps} from '../interfaces/componentsInterface/componentInterfaces';
+import Icons from './vectorIconSet';
+import BottomSheetComponent from './bottomSheetComponent';
 
 const DropDown = ({
   data,
@@ -86,12 +87,15 @@ const DropDown = ({
         {customIcon ? (
           customIcon({})
         ) : (
-          <View style={{transform: [{rotate: '270deg'}]}}>
+          <View>
             {isLoading ? (
               <ActivityIndicator size={'small'} color={colors.black} />
             ) : (
-              <Text>ArrowIcon</Text>
-              //   <BackArrowIcon height={12} width={8} fillColor={colors.icon} />
+              <Icons.Ionicons
+                name="chevron-down"
+                size={18}
+                color={colors.black}
+              />
             )}
           </View>
         )}
@@ -162,8 +166,11 @@ const DropDown = ({
                     {item?.label || item[dataKey]}
                   </Text>
                   {value[dataKey || 'value'] === item[dataKey || 'value'] && (
-                    // <CheckIcon fillColor={Colors.primaryRedColor} />
-                    <Text>CheckIconHere</Text>
+                    <Icons.Ionicons
+                      name="checkmark-outline"
+                      size={20}
+                      color={colors.black}
+                    />
                   )}
                 </TouchableOpacity>
               );
@@ -180,6 +187,7 @@ export default DropDown;
 const styles = StyleSheet.create({
   mainContainer: {
     paddingVertical: 8,
+    paddingHorizontal: 10,
   },
   valueStyle: {
     flex: 1,
@@ -208,8 +216,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   dropdownContainer: {
-    flex: 1,
-
+    width: '100%',
     paddingVertical: '5%',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
