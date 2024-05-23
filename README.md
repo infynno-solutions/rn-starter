@@ -138,6 +138,6 @@ Folder structure of this boilerplate with information
    - utils (contains helper.ts file which provides usefull helper functions and methods)
    - validation (contains all validation declrations for froms used in app)
 
-
-
+- Theme
+   - Contains Dark & Light theme support 
 
