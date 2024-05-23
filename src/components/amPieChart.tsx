@@ -6,7 +6,7 @@ import {Constants} from '../constants/constants';
 import appStyle from '../styles/appStyle';
 import {AmPieChartProps} from '../interfaces/componentsInterface/componentInterfaces';
 
-const AmPieChart = ({data, licenseKey}: AmPieChartProps) => {
+const AMPiechart = ({data, licenseKey}: AmPieChartProps) => {
   const renderWebView = useMemo(() => {
     const tempData = JSON.stringify(data);
     const html = `<html lang="en">
@@ -149,7 +149,7 @@ markerTemplate.height = 15;
   );
 };
 
-export default AmPieChart;
+export default AMPiechart;
 
 const styles = StyleSheet.create({
   emptyGraphStyle: {

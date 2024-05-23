@@ -77,3 +77,67 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+
+# Components
+
+Here is the list of custom components that can be reusable in any react-native app.
+
+- Accordion
+- AMPiechart
+- AnimatedInput
+- AnimatedTileScrolling
+- Avatar
+- Badge
+- BottomSheetComponent
+- Button
+- CustomImageLoader
+- CustomSvgs
+- DraggableComponent
+- DropDown
+- EmptyRecord
+- Header
+- IconButton
+- IconContentCard
+- InputText
+- InViewPort
+- Loader
+- ModalComponent
+- OnBoardingPager
+- Icons (VectorIconSet)
+
+# Firebase Email/Password Authentication
+
+This boilerplate includes firebase authentication using email and password. 
+- New User Registration
+- LogIn User
+
+To learn more about React Native Firebase Authentication, take a look at the following resources:
+- [Firebase Email/Password Authentication](https://rnfirebase.io/auth/usage)
+
+# Structure
+ 
+Folder structure of this boilerplate with information
+
+- android 
+   1. Contains all folders and files of native android platform
+- ios
+   1.Contains all folders and files of native ios platform
+- src
+   - api (contains index.ts file which handles api requests with axiosInterceptor)
+   - assets (all images and fonts should be declared in this folder)
+   - components (contains all custom components like button, loader, Modal)
+   - constants (contains all constants declarations like colors, fonts etc..)
+   - hooks (contains custom declared hooks that can be reusable)
+   - interfaces (contains all interfaces and types modal declarations)
+   - navigation (contains all type of navigation and routes)
+   - screens (contains all screen files)
+   - services (contains firebase auth services)
+   - store (contains redux store file that holds all over app data in store)
+   - styles (custom stylesheet is declared in this folder which is common stylesheet and can be reused)
+   - utils (contains helper.ts file which provides usefull helper functions and methods)
+   - validation (contains all validation declrations for froms used in app)
+
+   
+
+

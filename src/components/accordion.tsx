@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   LayoutAnimation,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,10 +11,7 @@ import {
 import appStyle from '../styles/appStyle';
 import Icons from './vectorIconSet';
 import colors from '../constants/color';
-import {
-  AccordionData,
-  LabelValue,
-} from '../interfaces/componentsInterface/componentInterfaces';
+import {AccordionData} from '../interfaces/componentsInterface/componentInterfaces';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
