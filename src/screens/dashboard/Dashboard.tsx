@@ -3,8 +3,7 @@ import {Text, View} from 'react-native';
 import {DashboardScreenProps} from '../../types/commonTypes';
 import appStyle from '../../styles/appStyle';
 import {signOut} from '../../services/firebase';
-import {useDispatch} from 'react-redux';
-import {clearAuth} from '../../store/auth/authSlice';
+import {useDispatch, useSelector} from 'react-redux';
 import {persistStore} from 'redux-persist';
 import store from '../../store/store';
 import Accordion from '../../components/accordion';
@@ -30,17 +29,22 @@ import Loader2 from '../../components/loader';
 import Loader3 from '../../components/loader3';
 import InputText from '../../components/inputText';
 import colors from '../../constants/color';
+import {RootState} from '../../../App';
+import {clearAuth} from '../../store/auth/authSlice';
+import {changeTheme} from '../../store/theme/themeSlice';
+import {DarkTheme, DefaultTheme} from '../../styles/themes';
 
 let persistor = persistStore(store);
 
 const DashboardScreen: FC<DashboardScreenProps> = () => {
   const dispatch = useDispatch();
+  const theme = useSelector((state: RootState) => state.theme.theme);
   const bottomSheetModalRef = useRef<BottomSheetModalMethods>(null);
   const modalRef = useRef<ModalRefProps>(null);
   const [selectedValue, setDropdown] = useState<DropdownValueProps>();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-
+  console.log(theme);
   return (
     <View style={appStyle.container}>
       <Header
@@ -57,11 +61,26 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
         ]}
         rightChildren={[
           <Text
+            style={{
+              padding: 5,
+              backgroundColor: DarkTheme.background,
+              color: DarkTheme.text,
+              borderRadius: 10,
+              textAlign: 'center',
+            }}
             onPress={() => {
-              signOut();
-              dispatch(clearAuth());
+              dispatch(changeTheme(theme.name === 'Light' ? 'Dark' : 'Light'));
+            }}>
+            {theme.name}
+            {'  '}
+          </Text>,
+          <Text>{'  '}</Text>,
+          <Text
+            onPress={() => {
               persistor.flush();
               persistor.purge();
+              dispatch(clearAuth());
+              signOut();
             }}>
             Logout
           </Text>,

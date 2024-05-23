@@ -1,18 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from 'axios';
-import {Platform} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  getInstanceId,
-  getManufacturer,
-  getBrand,
-  getSystemVersion,
-  getBaseOs,
-  getUniqueId,
-  getModel,
-  getVersion,
-} from 'react-native-device-info';
-import {axiosInterceptors} from '../../api';
 import { signInUsingEmailPassword, signUpUsingEmailPassword } from '../../services/firebase';
 
 const initialState = {
@@ -60,11 +47,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
   reducers: {
-
     setLoginIsSuccess: state => {
       
     },
     clearAuth: () => {
+      AsyncStorage.clear();
       return initialState;
     },
   },

@@ -2,10 +2,12 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import { authSlice } from './auth/authSlice';
+import themeSlice from './theme/themeSlice';
 
 
 const reducers = combineReducers({
   auth: authSlice.reducer,
+  theme:themeSlice
 });
 
 const rootReducer = (state:any, action:{ type: string, payload: any }) => {
