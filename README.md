@@ -120,9 +120,9 @@ To learn more about React Native Firebase Authentication, take a look at the fol
 Folder structure of this boilerplate with information
 
 - android 
-   1. Contains all folders and files of native android platform
+   - Contains all folders and files of native android platform
 - ios
-   1.Contains all folders and files of native ios platform
+   - Contains all folders and files of native ios platform
 - src
    - api (contains index.ts file which handles api requests with axiosInterceptor)
    - assets (all images and fonts should be declared in this folder)
@@ -138,6 +138,6 @@ Folder structure of this boilerplate with information
    - utils (contains helper.ts file which provides usefull helper functions and methods)
    - validation (contains all validation declrations for froms used in app)
 
-   
+
 
 
