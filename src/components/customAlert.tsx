@@ -35,7 +35,16 @@ const CustomAlert = ({
 
   return (
     <View>
-      <Modal visible={visibility} animationType={'fade'} transparent={true}>
+      <Modal
+        visible={visibility}
+        animationType={'fade'}
+        transparent={true}
+        supportedOrientations={[
+          'landscape',
+          'portrait',
+          'landscape-left',
+          'landscape-right',
+        ]}>
         <View
           style={[styles.wrapper, {backgroundColor: `${theme.background}cc`}]}>
           <View
