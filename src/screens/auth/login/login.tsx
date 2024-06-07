@@ -23,6 +23,8 @@ import Button from '../../../components/button';
 const LoginScreen: FC<LoginScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);
   const loading = useSelector((state: RootState) => state.auth.isFetching);
+  const theme = useSelector((state: RootState) => state.theme.theme);
+
   const dispatch = useDispatch<AppDispatch>();
   const initialValues: LoginValuesType = {
     email: '',
@@ -30,7 +32,8 @@ const LoginScreen: FC<LoginScreenProps> = props => {
   };
 
   return (
-    <SafeAreaView style={styles.SafeAreaViewStyle}>
+    <SafeAreaView
+      style={[styles.SafeAreaViewStyle, {backgroundColor: theme.background}]}>
       <Formik
         initialValues={initialValues}
         validationSchema={loginSchema}
@@ -54,17 +57,21 @@ const LoginScreen: FC<LoginScreenProps> = props => {
                 contentContainerStyle={styles.ScrollView}
                 keyboardShouldPersistTaps="handled">
                 <View style={styles.content}>
-                  <Text style={styles.loginTitle}>
+                  <Text style={[styles.loginTitle, {color: theme.text}]}>
                     Login to {'\n'}Your Account
                   </Text>
 
                   <View style={styles.inputView}>
-                    <View style={styles.inputGroup}>
+                    <View
+                      style={[
+                        styles.inputGroup,
+                        {borderBottomColor: theme.text},
+                      ]}>
                       <TextInput
                         selectionColor={'black'}
                         placeholder={String?.formTitle?.emailAddress}
-                        placeholderTextColor={'black'}
-                        style={styles.inputText2}
+                        placeholderTextColor={theme.border}
+                        style={[styles.inputText2, {color: theme.text}]}
                         blurOnSubmit
                         autoCapitalize="none"
                         clearButtonMode="while-editing"
@@ -80,12 +87,16 @@ const LoginScreen: FC<LoginScreenProps> = props => {
                     )}
                   </View>
                   <View style={styles.inputView}>
-                    <View style={styles.inputGroup}>
+                    <View
+                      style={[
+                        styles.inputGroup,
+                        {borderBottomColor: theme.text},
+                      ]}>
                       <TextInput
                         selectionColor={'black'}
                         placeholder={'Password'}
-                        placeholderTextColor={'black'}
-                        style={styles.inputText2}
+                        placeholderTextColor={theme.border}
+                        style={[styles.inputText2, {color: theme.text}]}
                         secureTextEntry={showPassword}
                         blurOnSubmit
                         autoCapitalize="none"
@@ -102,7 +113,8 @@ const LoginScreen: FC<LoginScreenProps> = props => {
                   <TouchableOpacity
                     onPress={() => props.navigation.navigate('ForgotPassword')}
                     style={styles.forgotPassBtn}>
-                    <Text style={styles.forgotPassBtnText}>
+                    <Text
+                      style={[styles.forgotPassBtnText, {color: theme.text}]}>
                       Forgot Password?
                     </Text>
                   </TouchableOpacity>
@@ -113,10 +125,10 @@ const LoginScreen: FC<LoginScreenProps> = props => {
                     outlined={true}
                     onPress={handleSubmit}
                   />
-                  <Text style={styles.signupTextBtn}>
+                  <Text style={[styles.signupTextBtn, {color: theme.text}]}>
                     Don't have an account yet?{'\n'}
                     <Text
-                      style={styles.signupTextBtn2}
+                      style={[styles.signupTextBtn2, {color: theme.text}]}
                       onPress={() => props.navigation.navigate('Signup')}>
                       Sign up Now.
                     </Text>

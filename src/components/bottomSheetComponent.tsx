@@ -10,6 +10,8 @@ import colors from '../constants/color';
 import {BottomSheetComponentProps} from '../interfaces/componentsInterface/componentInterfaces';
 import appStyle from '../styles/appStyle';
 import {View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../App';
 
 const BottomSheetComponent = ({
   bottomSheetModalRef,
@@ -24,6 +26,7 @@ const BottomSheetComponent = ({
   handleIndicatorStyle,
   onOpen,
 }: BottomSheetComponentProps) => {
+  const theme = useSelector((state: RootState) => state.theme.theme);
   const reducedMotion = useReducedMotion();
   const handleSheetChanges = useCallback((index: number) => {
     onOpen && onOpen(index);
@@ -60,7 +63,9 @@ const BottomSheetComponent = ({
           pressBehavior={disableCloseOnOutsideClick ? 'none' : 'close'}
         />
       )}>
-      <View style={appStyle.container}>{children}</View>
+      <View style={[appStyle.container, {backgroundColor: theme.background}]}>
+        {children}
+      </View>
     </BottomSheetModal>
   );
 };

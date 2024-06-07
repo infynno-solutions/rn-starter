@@ -173,3 +173,16 @@ export interface InViewPortState {
   rectBottom: number;
   rectWidth: number;
 }
+
+export interface CustomAlertProps{
+  displayTitle?:string;
+  displayMsg?:string;
+  visibility:boolean;
+  dismissAlert?:()=>void;
+  cancelButtonText?:string;
+  buttonText?:string;
+  onPressButton?:()=>void;
+  isLoading?:boolean;
+  isHtml?:boolean,
+  hideDismissButton?:boolean;
+}

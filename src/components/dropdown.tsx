@@ -14,6 +14,8 @@ import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types
 import {DropdownProps} from '../interfaces/componentsInterface/componentInterfaces';
 import Icons from './vectorIconSet';
 import BottomSheetComponent from './bottomSheetComponent';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../App';
 
 const DropDown = ({
   data,
@@ -35,6 +37,7 @@ const DropDown = ({
   showClear,
   onClear,
 }: DropdownProps) => {
+  const theme = useSelector((state: RootState) => state.theme.theme);
   const [value, setValue] = useState(selectedValue);
   const snapPoints = useMemo(() => ['50%', '60%', '80%'], []);
   const bottomSheetModalRef = useRef<BottomSheetModalMethods>(null);
@@ -71,7 +74,7 @@ const DropDown = ({
         style={[
           styles.DropDownStyle,
           {
-            borderColor: brColor ? brColor : colors.black,
+            borderColor: brColor ? brColor : theme.border,
           },
           customStyles,
         ]}>
@@ -79,7 +82,7 @@ const DropDown = ({
           numberOfLines={1}
           style={[
             styles.valueStyle,
-            {color: value ? colors.black : colors._C2C2C2},
+            {color: value ? theme.text : colors._C2C2C2},
           ]}>
           {value?.label || value[dataKey] || 'Select'}
         </Text>
@@ -89,12 +92,12 @@ const DropDown = ({
         ) : (
           <View>
             {isLoading ? (
-              <ActivityIndicator size={'small'} color={colors.black} />
+              <ActivityIndicator size={'small'} color={theme.text} />
             ) : (
               <Icons.Ionicons
                 name="chevron-down"
                 size={18}
-                color={colors.black}
+                color={theme.text}
               />
             )}
           </View>
@@ -108,7 +111,10 @@ const DropDown = ({
         enableHandlePanningGesture={false}
         opacity={0.5}>
         <View
-          style={[styles.dropdownContainer, {backgroundColor: colors.white}]}>
+          style={[
+            styles.dropdownContainer,
+            {backgroundColor: theme.background},
+          ]}>
           <FlatList
             ListHeaderComponent={() => {
               return (
@@ -160,7 +166,7 @@ const DropDown = ({
                   <Text
                     style={[
                       styles.itemTextStyle,
-                      {color: colors.black},
+                      {color: theme.text},
                       {opacity: isDisabled ? 0.5 : 1},
                     ]}>
                     {item?.label || item[dataKey]}
@@ -169,7 +175,7 @@ const DropDown = ({
                     <Icons.Ionicons
                       name="checkmark-outline"
                       size={20}
-                      color={colors.black}
+                      color={theme.text}
                     />
                   )}
                 </TouchableOpacity>

@@ -15,16 +15,39 @@ import String from '../../../constants/string';
 import {LoginValuesType} from '../../../types/AuthTypes';
 import {ForgotPasswordScreenProps} from '../../../types/CommonTypes';
 import {loginSchema} from '../../../validation/Validation';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../../App';
+import Button from '../../../components/button';
+import Header from '../../../components/header';
+import Icons from '../../../components/vectorIconSet';
 
 const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);
+  const theme = useSelector((state: RootState) => state.theme.theme);
   const initialValues: LoginValuesType = {
     email: '',
     password: '',
   };
 
   return (
-    <SafeAreaView style={styles.SafeAreaViewStyle}>
+    <SafeAreaView
+      style={[styles.SafeAreaViewStyle, {backgroundColor: theme.background}]}>
+      <Header
+        title=""
+        customStyles={{borderBottomWidth: 0}}
+        leftChildren={[
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.goBack();
+            }}>
+            <Icons.MaterialIcons
+              size={20}
+              color={theme.text}
+              name="arrow-back"
+            />
+          </TouchableOpacity>,
+        ]}
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={loginSchema}
@@ -46,14 +69,20 @@ const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
                 contentContainerStyle={styles.ScrollView}
                 keyboardShouldPersistTaps="handled">
                 <View style={styles.content}>
-                  <Text style={styles.loginTitle}>Forgot {'\n'}Password</Text>
+                  <Text style={[styles.loginTitle, {color: theme.text}]}>
+                    Forgot {'\n'}Password
+                  </Text>
                   <View style={styles.inputView}>
-                    <View style={styles.inputGroup}>
+                    <View
+                      style={[
+                        styles.inputGroup,
+                        {borderBottomColor: theme.text},
+                      ]}>
                       <TextInput
                         selectionColor={'black'}
                         placeholder={String?.formTitle?.emailAddress}
-                        placeholderTextColor={'black'}
-                        style={styles.inputText2}
+                        placeholderTextColor={theme.border}
+                        style={[styles.inputText2, {color: theme.text}]}
                         blurOnSubmit
                         autoCapitalize="none"
                         clearButtonMode="while-editing"
@@ -69,11 +98,11 @@ const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
                     )}
                   </View>
 
-                  <TouchableOpacity
-                    style={styles.btnBlack}
-                    onPress={handleSubmit}>
-                    <Text style={styles.btnText}>Submit</Text>
-                  </TouchableOpacity>
+                  <Button
+                    title="SUBMIT"
+                    outlined={true}
+                    onPress={handleSubmit}
+                  />
                 </View>
               </ScrollView>
             </KeyboardAvoidingView>

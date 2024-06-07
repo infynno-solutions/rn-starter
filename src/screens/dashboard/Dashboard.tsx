@@ -46,7 +46,7 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
   const [password, setPassword] = useState('');
   console.log(theme);
   return (
-    <View style={appStyle.container}>
+    <View style={[appStyle.container, {backgroundColor: theme.background}]}>
       <Header
         title="Home"
         leftChildren={[
@@ -63,19 +63,20 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
           <Text
             style={{
               padding: 5,
-              backgroundColor: DarkTheme.background,
-              color: DarkTheme.text,
+              backgroundColor: theme.text,
+              color: theme.background,
               borderRadius: 10,
               textAlign: 'center',
             }}
             onPress={() => {
               dispatch(changeTheme(theme.name === 'Light' ? 'Dark' : 'Light'));
             }}>
-            {theme.name}
+            {theme.name === 'Light' ? 'Dark' : 'Light'}
             {'  '}
           </Text>,
           <Text>{'  '}</Text>,
           <Text
+            style={{color: theme.text}}
             onPress={() => {
               persistor.flush();
               persistor.purge();
@@ -96,7 +97,12 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
           <Loader2 />
           <Loader3 />
         </View>
-        <AnimatedInput value={name} onChangeText={setName} placeholder="Name" />
+        <AnimatedInput
+          labelBgColor={theme.background}
+          value={name}
+          onChangeText={setName}
+          placeholder="Name"
+        />
 
         <InputText
           label={'Password'}
@@ -104,7 +110,7 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
           value={password}
           onChangeText={setPassword}
           type={'Password'}
-          brColor={colors.border}
+          brColor={theme.border}
         />
 
         <Button
@@ -143,16 +149,28 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
             setDropdown(e);
           }}
         />
-        <View style={[appStyle.container, {flex: 0, height: 120}]}>
+        <View
+          style={[
+            appStyle.container,
+            {flex: 0, height: 120, backgroundColor: theme.background},
+          ]}>
           <OnBaordingPager
             indicatorAnimationType="STRETCH"
-            data={['gray', 'black']}
+            data={[theme.border, theme.border]}
           />
         </View>
-        <View style={[appStyle.container, {flex: 0, marginTop: 10}]}>
+        <View
+          style={[
+            appStyle.container,
+            {flex: 0, marginTop: 10, backgroundColor: theme.background},
+          ]}>
           <TileScrolling data={[1, 2, 3, 4]} />
         </View>
-        <View style={[appStyle.container, {flex: 0, marginTop: 10}]}>
+        <View
+          style={[
+            appStyle.container,
+            {flex: 0, marginTop: 10, backgroundColor: theme.background},
+          ]}>
           <AnimatedTileScrolling data={[1, 2, 3, 4]} />
         </View>
       </ScrollView>

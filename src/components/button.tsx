@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import colors from '../constants/color';
 import {ButtonProps} from '../interfaces/componentsInterface/componentInterfaces';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../App';
 
 const Button = ({
   onPress,
@@ -25,6 +27,8 @@ const Button = ({
   numberOfLines,
   borderColor,
 }: ButtonProps) => {
+  const theme = useSelector((state: RootState) => state.theme.theme);
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -34,8 +38,8 @@ const Button = ({
         {
           width: buttonWidth ? buttonWidth : '95%',
           height: buttonHeight ? buttonHeight : 48,
-          backgroundColor: outlined ? colors.transparent : colors.black,
-          borderColor: borderColor ? borderColor : colors.black,
+          backgroundColor: outlined ? colors.transparent : theme.text,
+          borderColor: borderColor ? borderColor : theme.text,
         },
         customStyle,
         disabled && {opacity: 0.4},
@@ -45,7 +49,7 @@ const Button = ({
           loadingComponent({})
         ) : (
           <ActivityIndicator
-            color={outlined ? colors.black : colors.white}
+            color={outlined ? theme.text : theme.background}
             size="small"
           />
         )
@@ -55,7 +59,7 @@ const Button = ({
             numberOfLines={numberOfLines || 1}
             style={[
               styles.titleStyle,
-              {color: outlined ? colors.black : colors.white},
+              {color: outlined ? theme.text : theme.background},
               labelStyle,
             ]}>
             {title}

@@ -12,6 +12,7 @@ import {useSelector} from 'react-redux';
 import {InputTextProps} from '../interfaces/componentsInterface/componentInterfaces';
 import colors from '../constants/color';
 import Icons from './vectorIconSet';
+import {RootState} from '../../App';
 
 export const removeEmojis = (string: string) => {
   const regex =
@@ -38,6 +39,7 @@ const InputText = ({
 }: TextInputProps & InputTextProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const fref = useRef();
+  const theme = useSelector((state: RootState) => state.theme.theme);
 
   return (
     <View style={styles.mainContainer}>
@@ -58,7 +60,7 @@ const InputText = ({
             style={[
               [
                 styles.passwordInputTextStyle,
-                {color: colors.black},
+                {color: theme.text},
                 customStyles,
               ],
             ]}

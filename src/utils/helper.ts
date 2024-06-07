@@ -74,3 +74,11 @@ export async function isInternetConnected() {
   let status = await NetInfo.fetch();
   return status.isConnected;
 }
+
+
+export const webViewScript = `
+setTimeout(function() { 
+  window.ReactNativeWebView.postMessage(Math.max(document.body.clientHeight, document.body.scrollHeight))
+}, 500);
+true;
+`;

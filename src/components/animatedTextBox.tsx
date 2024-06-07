@@ -11,6 +11,8 @@ import {
 import colors from '../constants/color';
 import Icons from './vectorIconSet';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../App';
 
 export default function AnimatedInput({
   value,
@@ -24,9 +26,12 @@ export default function AnimatedInput({
   error: string | boolean;
   labelBgColor: string;
 }) {
+  const theme = useSelector((state: RootState) => state.theme.theme);
+
   const [showPassword, setShowPassword] = useState(false);
   const [inputHeight, setHeight] = useState(45);
   const [placeholderWidth, setWidth] = useState(0);
+
   const animation = useRef(new Animated.Value(0)).current;
   const translateY = animation.interpolate({
     inputRange: [0, 1],
@@ -44,12 +49,12 @@ export default function AnimatedInput({
 
   const bgColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [colors.white, labelBgColor || colors.lightgray],
+    outputRange: [theme.background, labelBgColor || colors.lightgray],
   });
 
   const colorLabel = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [colors.grey, colors.black],
+    outputRange: [colors.grey, theme.text],
   });
 
   const onFocus = () => animate(1);
@@ -65,7 +70,11 @@ export default function AnimatedInput({
   return (
     <>
       <View
-        style={[styles.inputContainer, error ? {borderColor: colors.red} : {}]}
+        style={[
+          styles.inputContainer,
+          {borderColor: theme.border, backgroundColor: theme.background},
+          error ? {borderColor: colors.red} : {},
+        ]}
         onLayout={e => !inputHeight && setHeight(e.nativeEvent.layout.height)}>
         <View style={{height: inputHeight, ...styles.placeholderContainer}}>
           <Animated.Text
@@ -84,6 +93,7 @@ export default function AnimatedInput({
           <TextInput
             style={[
               styles.input,
+              {color: theme.text},
               multiline && {height: 100, textAlignVertical: 'top'},
             ]}
             onFocus={onFocus}
@@ -120,10 +130,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: colors.border,
+
     marginHorizontal: 10,
     marginVertical: 5,
-    backgroundColor: colors.white,
   },
   input: {flex: 0.96, height: 45, paddingHorizontal: 10, fontSize: 15},
   placeholderContainer: {
@@ -136,7 +145,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginHorizontal: 10,
     paddingHorizontal: 5,
-
     borderRadius: 10,
   },
   errorMsg: {

@@ -4,9 +4,12 @@ import {Easing} from 'react-native-reanimated';
 import {CustomImageLoaderProps} from '../interfaces/componentsInterface/componentInterfaces';
 import Icons from './vectorIconSet';
 import colors from '../constants/color';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../App';
 
 const CustomImageLoader = ({isLoading, children}: CustomImageLoaderProps) => {
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
+  const theme = useSelector((state: RootState) => state.theme.theme);
 
   const handleAnimation = () => {
     Animated.loop(
@@ -53,7 +56,7 @@ const CustomImageLoader = ({isLoading, children}: CustomImageLoaderProps) => {
     <View style={styles.container}>
       <Animated.View style={animatedStyle}>
         {children || (
-          <Icons.FontAwesome6 name="spinner" size={30} color={colors.black} />
+          <Icons.FontAwesome6 name="spinner" size={30} color={theme.text} />
         )}
       </Animated.View>
     </View>

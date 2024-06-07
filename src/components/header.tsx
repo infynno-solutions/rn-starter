@@ -5,6 +5,7 @@ import useInternetStatus from '../hooks/useInternetStatus';
 import {memo} from 'react';
 import colors from '../constants/color';
 import {HeaderProps} from '../interfaces/componentsInterface/componentInterfaces';
+import {RootState} from '../../App';
 
 const Header = ({
   title,
@@ -17,12 +18,14 @@ const Header = ({
   customLeftChildStyle,
 }: HeaderProps) => {
   const isInternetConnected = useInternetStatus();
+  const theme = useSelector((state: RootState) => state.theme.theme);
+
   return (
     <>
       <View
         style={[
           styles.headerContainer,
-          {backgroundColor: colors.white, borderBottomColor: colors.border},
+          {backgroundColor: theme.background, borderBottomColor: colors.border},
           customStyles,
         ]}>
         <View style={[styles.leftChildContainer, customLeftChildStyle]}>
@@ -32,7 +35,7 @@ const Header = ({
           <View style={[styles.titleContainer, customTitleContainerStyle]}>
             <Text
               numberOfLines={1}
-              style={[styles.titleStyle, {color: colors.black}, titleStyles]}>
+              style={[styles.titleStyle, {color: theme.text}, titleStyles]}>
               {title}
             </Text>
           </View>
