@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
 import useInternetStatus from '../hooks/useInternetStatus';
 import {memo} from 'react';
 import colors from '../constants/color';
 import {HeaderProps} from '../interfaces/componentsInterface/componentInterfaces';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 const Header = ({
   title,
@@ -18,7 +17,7 @@ const Header = ({
   customLeftChildStyle,
 }: HeaderProps) => {
   const isInternetConnected = useInternetStatus();
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
 
   return (
     <>

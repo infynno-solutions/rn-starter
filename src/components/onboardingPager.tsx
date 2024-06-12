@@ -1,8 +1,7 @@
 import React, {useRef} from 'react';
 import {Animated, Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 import {OnBoardingPageProps} from '../interfaces/componentsInterface/componentInterfaces';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 const {width} = Dimensions.get('window');
 const data = ['brown', 'orange', 'red', 'blue', 'green'];
@@ -11,7 +10,7 @@ export default function OnBaordingPager({
   data,
   indicatorAnimationType,
 }: OnBoardingPageProps) {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
   const scrollValue = useRef(new Animated.Value(0)).current;
   const translateX = scrollValue.interpolate({
     inputRange: [0, width],

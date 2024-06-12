@@ -14,8 +14,7 @@ import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types
 import {DropdownProps} from '../interfaces/componentsInterface/componentInterfaces';
 import Icons from './vectorIconSet';
 import BottomSheetComponent from './bottomSheetComponent';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 const DropDown = ({
   data,
@@ -37,7 +36,7 @@ const DropDown = ({
   showClear,
   onClear,
 }: DropdownProps) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
   const [value, setValue] = useState(selectedValue);
   const snapPoints = useMemo(() => ['50%', '60%', '80%'], []);
   const bottomSheetModalRef = useRef<BottomSheetModalMethods>(null);

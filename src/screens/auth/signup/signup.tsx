@@ -17,17 +17,14 @@ import {LoginValuesType} from '../../../types/AuthTypes';
 import {SignupScreenProps} from '../../../types/CommonTypes';
 import {loginSchema} from '../../../validation/Validation';
 import colors from '../../../constants/color';
-import {registerUser} from '../../../store/auth/authSlice';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppDispatch, RootState} from '../../../../App';
-import Button from '../../../components/button';
+import {useAuthStore} from '../../../store/auth-store';
+import {useThemeStore} from '../../../store/theme-store';
 
 const SignupScreen: FC<SignupScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);
-  const loading = useSelector((state: RootState) => state.auth.isFetching);
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {isFetching: loading, registerUser} = useAuthStore();
+  const {theme} = useThemeStore();
 
-  const dispatch = useDispatch<AppDispatch>();
   const initialValues: LoginValuesType = {
     email: '',
     password: '',
@@ -40,14 +37,12 @@ const SignupScreen: FC<SignupScreenProps> = props => {
         initialValues={initialValues}
         validationSchema={loginSchema}
         onSubmit={async values => {
-          dispatch(
-            registerUser({
-              ...values,
-              onSuccess: () => {
-                props.navigation.goBack();
-              },
-            }),
-          );
+          registerUser({
+            ...values,
+            onSuccess: () => {
+              props.navigation.goBack();
+            },
+          });
         }}>
         {({
           values,
@@ -118,7 +113,15 @@ const SignupScreen: FC<SignupScreenProps> = props => {
                       <Text style={styles.errorMsg}>{errors.password}</Text>
                     )}
                   </View>
-                  c
+                  <TouchableOpacity
+                    style={styles.btnBlack}
+                    onPress={() => handleSubmit()}>
+                    {loading ? (
+                      <ActivityIndicator size={'small'} color={colors.black} />
+                    ) : (
+                      <Text style={styles.btnText}>Sign Up</Text>
+                    )}
+                  </TouchableOpacity>
                   <Text style={[styles.signupTextBtn, {color: theme.text}]}>
                     Already have an account?{'\n'}
                     <Text

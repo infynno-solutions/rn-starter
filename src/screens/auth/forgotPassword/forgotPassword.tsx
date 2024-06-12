@@ -15,15 +15,14 @@ import String from '../../../constants/string';
 import {LoginValuesType} from '../../../types/AuthTypes';
 import {ForgotPasswordScreenProps} from '../../../types/CommonTypes';
 import {loginSchema} from '../../../validation/Validation';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../../../App';
 import Button from '../../../components/button';
 import Header from '../../../components/header';
 import Icons from '../../../components/vectorIconSet';
+import {useThemeStore} from '../../../store/theme-store';
 
 const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
   const initialValues: LoginValuesType = {
     email: '',
     password: '',

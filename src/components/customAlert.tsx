@@ -12,9 +12,8 @@ import appStyle, {Responsive} from '../styles/appStyle';
 import Button from './button';
 import WebView from 'react-native-webview';
 import {webViewScript} from '../utils/helper';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
 import {CustomAlertProps} from '../interfaces/componentsInterface/componentInterfaces';
+import {useThemeStore} from '../store/theme-store';
 
 const CustomAlert = ({
   displayTitle,
@@ -28,7 +27,7 @@ const CustomAlert = ({
   isHtml = false,
   hideDismissButton = false,
 }: CustomAlertProps) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
 
   const [webViewHeight, setWebViewHeight] = useState(0);
   const [webViewLoading, setWebViewLoading] = useState(false);

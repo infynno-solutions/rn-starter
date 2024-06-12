@@ -3,13 +3,11 @@ import {StyleSheet, View, Animated} from 'react-native';
 import {Easing} from 'react-native-reanimated';
 import {CustomImageLoaderProps} from '../interfaces/componentsInterface/componentInterfaces';
 import Icons from './vectorIconSet';
-import colors from '../constants/color';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 const CustomImageLoader = ({isLoading, children}: CustomImageLoaderProps) => {
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
 
   const handleAnimation = () => {
     Animated.loop(

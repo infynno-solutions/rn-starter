@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Linking, View} from 'react-native';
-import {useSelector} from 'react-redux';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import DashboardNavigator from './dashboardNavigator';
@@ -8,17 +7,16 @@ import AuthNavigator from './authNavigator';
 import {ApplicationState} from '../types/CommonTypes';
 import SplashScreen from '../screens/splashScreen/splashScreen';
 import appStyle from '../styles/appStyle';
-import {RootState} from '../../App';
+
 import CustomAlert from '../components/customAlert';
+import {useThemeStore} from '../store/theme-store';
+import {useAuthStore} from '../store/auth-store';
 
 const Navigation = () => {
   const [isPreloading, setIsPreloading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(true);
-
-  const user: any = useSelector(
-    (state: ApplicationState) => state.auth.userData,
-  );
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {userData: user}: {userData: any} = useAuthStore();
+  const {theme} = useThemeStore();
 
   const isUserLogin = user?.user;
   useEffect(() => {

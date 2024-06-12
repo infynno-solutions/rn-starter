@@ -1,13 +1,11 @@
 import React, {memo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Badge as BadgeComponent} from 'react-native-paper';
-import colors from '../constants/color';
 import {BadgeProps} from '../interfaces/componentsInterface/componentInterfaces';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 const Badge = ({count, customStyles, showBadge}: BadgeProps) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
 
   if (showBadge)
     return (

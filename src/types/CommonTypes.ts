@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import store from '../store/store';
+import store from '../store/auth-store';
 
 export type ApplicationState = ReturnType<typeof store.getState>;
 

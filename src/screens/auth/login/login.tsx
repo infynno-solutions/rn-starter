@@ -15,17 +15,14 @@ import String from '../../../constants/string';
 import {LoginValuesType} from '../../../types/AuthTypes';
 import {LoginScreenProps} from '../../../types/CommonTypes';
 import {loginSchema} from '../../../validation/Validation';
-import {useDispatch, useSelector} from 'react-redux';
-import {loginUser} from '../../../store/auth/authSlice';
-import {AppDispatch, RootState} from '../../../../App';
 import Button from '../../../components/button';
+import {useAuthStore} from '../../../store/auth-store';
+import {useThemeStore} from '../../../store/theme-store';
 
 const LoginScreen: FC<LoginScreenProps> = props => {
   const [showPassword] = useState<boolean>(true);
-  const loading = useSelector((state: RootState) => state.auth.isFetching);
-  const theme = useSelector((state: RootState) => state.theme.theme);
-
-  const dispatch = useDispatch<AppDispatch>();
+  const {isFetching: loading, loginUser} = useAuthStore();
+  const {theme} = useThemeStore();
   const initialValues: LoginValuesType = {
     email: '',
     password: '',
@@ -37,9 +34,7 @@ const LoginScreen: FC<LoginScreenProps> = props => {
       <Formik
         initialValues={initialValues}
         validationSchema={loginSchema}
-        onSubmit={async values => {
-          dispatch(loginUser(values));
-        }}>
+        onSubmit={async values => loginUser(values)}>
         {({
           values,
           touched,

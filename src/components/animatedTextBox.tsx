@@ -11,8 +11,7 @@ import {
 import colors from '../constants/color';
 import Icons from './vectorIconSet';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 export default function AnimatedInput({
   value,
@@ -26,8 +25,7 @@ export default function AnimatedInput({
   error: string | boolean;
   labelBgColor: string;
 }) {
-  const theme = useSelector((state: RootState) => state.theme.theme);
-
+  const {theme} = useThemeStore();
   const [showPassword, setShowPassword] = useState(false);
   const [inputHeight, setHeight] = useState(45);
   const [placeholderWidth, setWidth] = useState(0);

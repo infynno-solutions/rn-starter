@@ -3,9 +3,6 @@ import {Text, View} from 'react-native';
 import {DashboardScreenProps} from '../../types/commonTypes';
 import appStyle from '../../styles/appStyle';
 import {signOut} from '../../services/firebase';
-import {useDispatch, useSelector} from 'react-redux';
-import {persistStore} from 'redux-persist';
-import store from '../../store/store';
 import Accordion from '../../components/accordion';
 import Header from '../../components/header';
 import Avatar from '../../components/Avatar';
@@ -28,23 +25,18 @@ import AnimatedInput from '../../components/animatedTextBox';
 import Loader2 from '../../components/loader';
 import Loader3 from '../../components/loader3';
 import InputText from '../../components/inputText';
-import colors from '../../constants/color';
-import {RootState} from '../../../App';
-import {clearAuth} from '../../store/auth/authSlice';
-import {changeTheme} from '../../store/theme/themeSlice';
-import {DarkTheme, DefaultTheme} from '../../styles/themes';
-
-let persistor = persistStore(store);
+import {useThemeStore} from '../../store/theme-store';
+import {useAuthStore} from '../../store/auth-store';
 
 const DashboardScreen: FC<DashboardScreenProps> = () => {
-  const dispatch = useDispatch();
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme, changeTheme} = useThemeStore();
+  const {clearAuth} = useAuthStore();
   const bottomSheetModalRef = useRef<BottomSheetModalMethods>(null);
   const modalRef = useRef<ModalRefProps>(null);
   const [selectedValue, setDropdown] = useState<DropdownValueProps>();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  console.log(theme);
+
   return (
     <View style={[appStyle.container, {backgroundColor: theme.background}]}>
       <Header
@@ -69,7 +61,7 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
               textAlign: 'center',
             }}
             onPress={() => {
-              dispatch(changeTheme(theme.name === 'Light' ? 'Dark' : 'Light'));
+              changeTheme(theme.name === 'Light' ? 'Dark' : 'Light');
             }}>
             {theme.name === 'Light' ? 'Dark' : 'Light'}
             {'  '}
@@ -78,9 +70,7 @@ const DashboardScreen: FC<DashboardScreenProps> = () => {
           <Text
             style={{color: theme.text}}
             onPress={() => {
-              persistor.flush();
-              persistor.purge();
-              dispatch(clearAuth());
+              clearAuth();
               signOut();
             }}>
             Logout

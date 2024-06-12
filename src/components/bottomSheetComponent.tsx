@@ -10,8 +10,7 @@ import colors from '../constants/color';
 import {BottomSheetComponentProps} from '../interfaces/componentsInterface/componentInterfaces';
 import appStyle from '../styles/appStyle';
 import {View} from 'react-native';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 const BottomSheetComponent = ({
   bottomSheetModalRef,
@@ -26,7 +25,7 @@ const BottomSheetComponent = ({
   handleIndicatorStyle,
   onOpen,
 }: BottomSheetComponentProps) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
   const reducedMotion = useReducedMotion();
   const handleSheetChanges = useCallback((index: number) => {
     onOpen && onOpen(index);

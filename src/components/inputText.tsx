@@ -8,11 +8,10 @@ import {
   TextInputProps,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
-import {useSelector} from 'react-redux';
 import {InputTextProps} from '../interfaces/componentsInterface/componentInterfaces';
 import colors from '../constants/color';
 import Icons from './vectorIconSet';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 export const removeEmojis = (string: string) => {
   const regex =
@@ -39,7 +38,7 @@ const InputText = ({
 }: TextInputProps & InputTextProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const fref = useRef();
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
 
   return (
     <View style={styles.mainContainer}>

@@ -8,8 +8,7 @@ import {
 } from 'react-native';
 import colors from '../constants/color';
 import {ButtonProps} from '../interfaces/componentsInterface/componentInterfaces';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../App';
+import {useThemeStore} from '../store/theme-store';
 
 const Button = ({
   onPress,
@@ -27,7 +26,7 @@ const Button = ({
   numberOfLines,
   borderColor,
 }: ButtonProps) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const {theme} = useThemeStore();
 
   return (
     <TouchableOpacity
