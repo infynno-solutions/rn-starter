@@ -1,33 +1,69 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import {persistReducer} from 'redux-persist';
+import {create} from 'zustand';
+import {createJSONStorage, persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-community/async-storage';
-import { authSlice } from './auth/authSlice';
 
-const reducers = combineReducers({
-  auth: authSlice.reducer,
-});
+interface AuthSlice {
+  email: string;
+  password: string;
+  isFetching: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  errorMessage: string;
+  userData: {};
+  userToken: string;
+  redirectLogin: {
+    isLoading: boolean;
+    data: null;
+    isRejected: boolean;
+  };
+}
 
-const rootReducer = (state:any, action:{ type: string, payload: any }) => {
-  if (action.type === 'auth/clearState') {
-    AsyncStorage.removeItem('persist:root');
-    state = {};
-  }
-  return reducers(state, action);
+const initialState = {
+  email: '',
+  password: '',
+  isFetching: false,
+  isSuccess: false,
+  isError: false,
+  errorMessage: '',
+  userData: {},
+  userToken: '',
+  redirectLogin: {
+    isLoading: false,
+    data: null,
+    isRejected: false,
+  },
 };
-const persistConfig = {
-  key: 'root',
-  timeout: 1000,
-  storage: AsyncStorage,
-  blacklist: [],
-};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export default configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-      immutableCheck: false,
+export const useAuthStore = create<AuthSlice>()(
+  persist(
+    set => ({
+      ...initialState,
+      clearRedirectLoginData: () =>
+        set(state => ({
+          ...state,
+          redirectLogin: {isLoading: false, data: null, isRejected: false},
+        })),
+      clearState: () =>
+        set(state => ({
+          ...state,
+          isError: false,
+          isSuccess: false,
+          isFetching: false,
+        })),
+      clearLoginStates: () =>
+        set(state => ({
+          ...state,
+          isError: false,
+          isSuccess: false,
+          isFetching: false,
+        })),
+      setLoginIsSuccess: () =>
+        set(state => ({...state, isSuccess: true, isFetching: false})),
+      resetState: () => set(state => initialState),
     }),
-});
+    {
+      name: 'auth',
+      storage: createJSONStorage(() => AsyncStorage),
+    },
+  ),
+);

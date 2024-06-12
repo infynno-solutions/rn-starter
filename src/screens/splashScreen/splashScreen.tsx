@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import React, {useEffect, useRef, useState} from 'react';
+import {Animated, StyleSheet} from 'react-native';
 
-const LOADING_IMAGE = "Loading image";
-const FADE_IN_IMAGE = "Fade in image";
-const FADE_OUT = "Fade out";
-const HIDDEN = "Hidden";
+const LOADING_IMAGE = 'Loading image';
+const FADE_IN_IMAGE = 'Fade in image';
+const FADE_OUT = 'Fade out';
+const HIDDEN = 'Hidden';
 
 const SplashScreen = () => {
   const containerOpacity = useRef(new Animated.Value(1)).current;
@@ -44,16 +43,14 @@ const SplashScreen = () => {
   return (
     <Animated.View
       collapsable={false}
-      style={[style.container, { opacity: containerOpacity }]}
-    >
+      style={[style.container, {opacity: containerOpacity}]}>
       <Animated.Image
-        source={ require("../../assets/Logo.png")
-        }
+        source={require('../../assets/Logo.png')}
         fadeDuration={0}
         onLoad={() => {
           setState(FADE_IN_IMAGE);
         }}
-        style={[style.image, { opacity: imageOpacity }]}
+        style={[style.image, {opacity: imageOpacity}]}
         resizeMode="contain"
       />
     </Animated.View>
@@ -63,10 +60,10 @@ const SplashScreen = () => {
 export default SplashScreen;
 
 const style = StyleSheet.create({
-  container:{
+  container: {
     ...StyleSheet.absoluteFillObject,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     width: 250,

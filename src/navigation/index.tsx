@@ -1,19 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {useSelector} from 'react-redux';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import DashboardNavigator from './DashboardNavigator';
 import AuthNavigator from './AuthNavigator';
-import {ApplicationState} from '../types/CommonTypes';
 import SplashScreen from '../screens/splashScreen/splashScreen';
 import appStyle from '../styles/appStyle';
+import {useAuthStore} from '../store/store';
 
 const Navigation = () => {
   const [isPreloading, setIsPreloading] = useState<boolean>(true);
-  const isUserLogin = useSelector(
-    (state: ApplicationState) => state.auth.isSuccess,
-  );
+  const {isSuccess: isUserLogin} = useAuthStore();
 
   useEffect(() => {
     setTimeout(() => setIsPreloading(false), 3000);
