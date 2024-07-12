@@ -68,13 +68,13 @@ const updateIOSBundleIdentifier = bundleId => {
   const infoPlistPath = path.join(
     process.cwd(),
     'ios',
-    'reactNativeStarter',
+    projectName,
     'Info.plist',
   );
   const projectPbxprojPath = path.join(
     process.cwd(),
     'ios',
-    'reactNativeStarter' + '.xcodeproj',
+    projectName + '.xcodeproj',
     'project.pbxproj',
   );
 
