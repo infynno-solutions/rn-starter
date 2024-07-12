@@ -26,15 +26,15 @@ const updateAndroidPackageName = packageName => {
     'android/app/src/main/AndroidManifest.xml',
     'android/app/build.gradle',
     'android/app/src/debug/AndroidManifest.xml',
-    'android/app/src/main/java/com/projectname/MainActivity.java',
-    'android/app/src/main/java/com/projectname/MainApplication.java',
+    'android/app/src/main/java/com/reactnativestarter/MainActivity.java',
+    'android/app/src/main/java/com/reactnativestarter/MainApplication.java',
   ];
 
   filesToModify.forEach(filePath => {
     const fullPath = path.join(process.cwd(), filePath);
     if (fs.existsSync(fullPath)) {
       let content = fs.readFileSync(fullPath, 'utf8');
-      content = content.replace(/com\.projectname/g, packageName);
+      content = content.replace(/com\.reactnativestarter/g, packageName);
       fs.writeFileSync(fullPath, content, 'utf8');
     }
   });
@@ -42,7 +42,7 @@ const updateAndroidPackageName = packageName => {
   // Rename the Java directory structure
   const oldDir = path.join(
     process.cwd(),
-    'android/app/src/main/java/com/projectname',
+    'android/app/src/main/java/com/reactnativestarter',
   );
   const newDir = path.join(
     process.cwd(),
@@ -55,7 +55,10 @@ const updateAndroidPackageName = packageName => {
     fs.renameSync(path.join(oldDir, file), path.join(newDir, file));
   });
   fs.rmdirSync(
-    path.join(process.cwd(), 'android/app/src/main/java/com/projectname'),
+    path.join(
+      process.cwd(),
+      'android/app/src/main/java/com/reactnativestarter',
+    ),
     {recursive: true},
   );
 };
@@ -65,13 +68,13 @@ const updateIOSBundleIdentifier = bundleId => {
   const infoPlistPath = path.join(
     process.cwd(),
     'ios',
-    projectName,
+    'reactNativeStarter',
     'Info.plist',
   );
   const projectPbxprojPath = path.join(
     process.cwd(),
     'ios',
-    projectName + '.xcodeproj',
+    'reactNativeStarter' + '.xcodeproj',
     'project.pbxproj',
   );
 
@@ -100,10 +103,10 @@ const updateProjectFiles = (oldName, newName, packageName) => {
     'android/app/src/main/AndroidManifest.xml',
     'android/app/build.gradle',
     'android/app/src/debug/AndroidManifest.xml',
-    'android/app/src/main/java/com/projectname/MainActivity.java',
-    'android/app/src/main/java/com/projectname/MainApplication.java',
-    `ios/${oldName}/Info.plist`,
-    `ios/${oldName}.xcodeproj/project.pbxproj`,
+    'android/app/src/main/java/com/reactnativestarter/MainActivity.java',
+    'android/app/src/main/java/com/reactnativestarter/MainApplication.java',
+    `ios/reactNativeStarter/Info.plist`,
+    `ios/reactNativeStarter.xcodeproj/project.pbxproj`,
   ];
 
   filesToModify.forEach(filePath => {
@@ -112,7 +115,7 @@ const updateProjectFiles = (oldName, newName, packageName) => {
       let content = fs.readFileSync(fullPath, 'utf8');
       content = content
         .replace(new RegExp(oldName, 'g'), newName)
-        .replace(/com\.projectname/g, packageName);
+        .replace(/com\.reactnativestarter/g, packageName);
       fs.writeFileSync(fullPath, content, 'utf8');
     }
   });
@@ -126,6 +129,7 @@ const updateProjectFiles = (oldName, newName, packageName) => {
 };
 
 // Execute the script
+
 const oldProjectName = 'rn-starter'; // Replace with the current project name in the boilerplate
 const newProjectDir = path.join(process.cwd(), projectName);
 if (oldProjectName !== projectName) {
@@ -136,6 +140,6 @@ updateProjectFiles(oldProjectName, projectName, packageName);
 updateAndroidPackageName(packageName);
 updateIOSBundleIdentifier(packageName);
 
-execCommand('npm install');
+execCommand('yarn && npx pod-install');
 
 console.log('React Native project setup complete!');

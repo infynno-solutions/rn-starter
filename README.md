@@ -141,3 +141,6 @@ Folder structure of this boilerplate with information
 - Theme
    - Contains Dark & Light theme support 
 
+# Follow the steps to create new Repo from scratch with new package name & bundle ID
+- rename oldProjectName to your project repo name
+- then run this command "node scripts/setup.js sampleApp com.sampleApp"
